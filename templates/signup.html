@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCare - Sign Up</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="brand">SMARTCARE</div>
+        <div class="user-badge">Create Account</div>
+    </header>
+
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 0;">
+        <div class="split-container">
+            <div class="split-left">
+                <div>
+                    <span style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted);">HEALTHCARE MANAGEMENT SYSTEM</span>
+                    <h1 style="font-size: 2rem; margin-top: 1rem; line-height: 1.2;">Join the SmartCare team.</h1>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Create a staff account to register patients, book appointments, and manage clinic workflows.</p>
+            </div>
+
+            <div class="split-right">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Fill in the details below to create your account.</p>
+                <form action="/signup" method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;" onsubmit="return validateSignup()">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="e.g. Admin Rea" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="At least 4 characters" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+                <p style="margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+                    Already have an account? <a href="/login" style="color: var(--black); font-weight: 600;">Sign in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateSignup() {
+            var username = document.getElementById("username").value.trim();
+            var password = document.getElementById("password").value;
+            var confirm = document.getElementById("confirm_password").value;
+
+            if (password.length < 4) {
+                alert("Password must be at least 4 characters long.");
+                return false;
+            }
+            if (password !== confirm) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

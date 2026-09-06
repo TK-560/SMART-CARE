@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCare - Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="brand">SMARTCARE</div>
+        <div class="user-badge">System Access</div>
+    </header>
+
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 0;">
+        <div class="split-container">
+            <div class="split-left">
+                <div>
+                    <span style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted);">HEALTHCARE MANAGEMENT SYSTEM</span>
+                    <h1 style="font-size: 2rem; margin-top: 1rem; line-height: 1.2;">Patient-centered care, simplified.</h1>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Manage appointments, patient records, and clinical workflows from a single unified platform.</p>
+            </div>
+
+            <div class="split-right">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Enter your credentials to access the system.</p>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1.25rem;">{{ message }}</div>
+                    {% endfor %}
+                {% endwith %}
+
+                <form action="/login" method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;" onsubmit="return validateLogin()">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="e.g. Admin Rea" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+                <p style="margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+                    New user? <a href="/signup" style="color: var(--black); font-weight: 600;">Create an account</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateLogin() {
+            var username = document.getElementById("username").value.trim();
+            var password = document.getElementById("password").value;
+
+            if (!username || !password) {
+                alert("Please enter both username and password.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

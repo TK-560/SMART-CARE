@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCare - All Appointments</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="brand">SMARTCARE</div>
+        <div class="header-actions">
+            <span class="user-badge">Signed in as {{ session.get('user') }}</span>
+            <a href="/logout" class="btn btn-logout">Logout</a>
+        </div>
+    </header>
+
+    <div class="main-container" style="max-width: 1100px;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1rem;">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="step-header">
+            <h2>All Appointments</h2>
+            <div style="display: flex; gap: 0.75rem;">
+                <a href="/book_appointment" class="btn btn-primary" style="width: auto;">New Appointment</a>
+                <a href="/dashboard" class="btn btn-secondary" style="width: auto;">Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+            <input type="search" id="apt_search" placeholder="Search by patient, doctor, date, or status..." autocomplete="off">
+        </div>
+
+        {% if appointments %}
+        <div class="table-section">
+            <table class="data-table" id="appointments_table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Specialisation</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for apt in appointments %}
+                    <tr>
+                        <td>{{ apt[0] }}</td>
+                        <td>{{ apt[1] }}</td>
+                        <td>{{ apt[2] }}</td>
+                        <td>{{ apt[3] }}</td>
+                        <td>{{ apt[4] }}</td>
+                        <td>{{ apt[5] }}</td>
+                        <td><span class="status-badge">{{ apt[6] }}</span></td>
+                        <td>{{ apt[7] or '' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p style="color: var(--text-muted); font-size: 0.9rem;">No appointments found.</p>
+        {% endif %}
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="/register" class="nav-item">Registration</a>
+        <a href="/book_appointment" class="nav-item">Appointment</a>
+        <a href="/dashboard" class="nav-item">Dashboard</a>
+    </nav>
+
+    <script>
+        document.getElementById("apt_search").addEventListener("input", function () {
+            var query = this.value.toLowerCase();
+            var rows = document.querySelectorAll("#appointments_table tbody tr");
+            rows.forEach(function (row) {
+                row.hidden = row.textContent.toLowerCase().indexOf(query) === -1;
+            });
+        });
+    </script>
+</body>
+</html>

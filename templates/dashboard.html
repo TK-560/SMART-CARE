@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCare - Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="brand">SMARTCARE</div>
+        <div class="header-actions">
+            <span class="user-badge">Signed in as {{ session.get('user') }}</span>
+            <a href="/logout" class="btn btn-logout">Logout</a>
+        </div>
+    </header>
+
+    <div class="main-container" style="max-width: 1100px;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1rem;">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="step-header">
+            <h2>Overview &amp; Analytics</h2>
+            <div style="display: flex; gap: 0.75rem;">
+                <a href="/appointments" class="btn btn-secondary" style="width: auto;">View All Appointments</a>
+                <a href="/book_appointment" class="btn btn-primary" style="width: auto;">New Appointment</a>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-title">Total Patients</span>
+                <div class="metric-value">{{ patient_count }}</div>
+                <span class="metric-sub">Registered patients</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-title">Total Doctors</span>
+                <div class="metric-value">{{ doctor_count }}</div>
+                <span class="metric-sub">Practice practitioners</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-title">Total Appointments</span>
+                <div class="metric-value">{{ total_appointments }}</div>
+                <span class="metric-sub">All-time records</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-title">Today</span>
+                <div class="metric-value">{{ today_count }}</div>
+                <span class="metric-sub">Appointments booked for today</span>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <span class="section-title">Upcoming Appointments</span>
+            {% if upcoming_appointments %}
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for apt in upcoming_appointments %}
+                    <tr>
+                        <td>{{ apt[0] }}</td>
+                        <td>{{ apt[1] }}</td>
+                        <td>{{ apt[2] }}</td>
+                        <td>{{ apt[3] }}</td>
+                        <td>{{ apt[4] }}</td>
+                        <td><span class="status-badge">{{ apt[5] }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="color: var(--text-muted); font-size: 0.9rem;">No upcoming appointments.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="/register" class="nav-item">Registration</a>
+        <a href="/book_appointment" class="nav-item">Appointment</a>
+        <a href="/appointments" class="nav-item">All Appointments</a>
+    </nav>
+</body>
+</html>

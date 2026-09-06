@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCare - Register Patient</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="brand">SMARTCARE</div>
+        <div class="header-actions">
+            <span class="user-badge">{{ session.get('user') }} · Staff Workspace</span>
+            <a href="/logout" class="btn btn-logout">Logout</a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1rem;">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="step-header">
+            <span class="step-title">Patient Intake / Step 1 of 1</span>
+            <span class="required-label">* Required fields</span>
+        </div>
+
+        <h2>Register New Patient</h2>
+
+        <form action="/register" method="POST" onsubmit="return validatePatientForm()">
+            <div class="form-section">
+                <span class="section-title">Personal Information</span>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="patient_number">Patient Number</label>
+                        <input type="text" id="patient_number" name="patient_number" placeholder="8-digit Number" maxlength="8" pattern="[0-9]{8}" required>
+                        <span class="field-hint" id="ptn_hint"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="sa_id">SA ID / Passport Number</label>
+                        <input type="text" id="sa_id" name="sa_id" placeholder="13-digit SA ID" maxlength="13" pattern="[0-9]{13}" required>
+                        <span class="field-hint" id="id_hint"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" id="first_name" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth </label>
+                        <input type="date" id="dob" name="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender </label>
+                        <div class="radio-group">
+                            <label class="radio-option"><input type="radio" name="gender" value="Male" required> Male</label>
+                            <label class="radio-option"><input type="radio" name="gender" value="Female"> Female</label>
+                            <label class="radio-option"><input type="radio" name="gender" value="Other"> Other</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <span class="section-title">Contact & Residence</span>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="contact_number">Contact Number </label>
+                        <input type="tel" id="contact_number" name="contact_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="residential_address">Residential Address </label>
+                        <input type="text" id="residential_address" name="residential_address" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="emergency_contact">Emergency Contact Details </label>
+                        <input type="text" id="emergency_contact" name="emergency_contact" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="/dashboard" class="btn btn-secondary" style="width: auto;">Cancel</a>
+                <button type="submit" class="btn btn-primary" style="width: auto;">Save Patient Record</button>
+            </div>
+        </form>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="/book_appointment" class="nav-item">Appointment</a>
+        <a href="/dashboard" class="nav-item">Dashboard</a>
+    </nav>
+
+    <script>
+        function validatePatientForm() {
+            var patientNumber = document.getElementById("patient_number").value.trim();
+            var saId = document.getElementById("sa_id").value.trim();
+            var firstName = document.getElementById("first_name").value.trim();
+            var lastName = document.getElementById("last_name").value.trim();
+            var dob = document.getElementById("dob").value;
+            var contact = document.getElementById("contact_number").value.trim();
+            var address = document.getElementById("residential_address").value.trim();
+            var emergency = document.getElementById("emergency_contact").value.trim();
+
+            if (!/^\d{8}$/.test(patientNumber)) {
+                alert("Patient number must be exactly 8 digits.");
+                return false;
+            }
+            if (!/^\d{13}$/.test(saId)) {
+                alert("SA ID must be exactly 13 digits.");
+                return false;
+            }
+            if (!firstName || !lastName) {
+                alert("Please provide first and last name.");
+                return false;
+            }
+            if (!dob) {
+                alert("Please select a date of birth.");
+                return false;
+            }
+            if (!contact || !address || !emergency) {
+                alert("Please complete all contact and residence fields.");
+                return false;
+            }
+            return true;
+        }
+
+        document.getElementById("patient_number").addEventListener("input", function () {
+            var hint = document.getElementById("ptn_hint");
+            hint.textContent = /^\d{8}$/.test(this.value) ? "" : "8 digits required";
+        });
+
+        document.getElementById("sa_id").addEventListener("input", function () {
+            var hint = document.getElementById("id_hint");
+            hint.textContent = /^\d{13}$/.test(this.value) ? "" : "13 digits required";
+        });
+    </script>
+</body>
+</html>

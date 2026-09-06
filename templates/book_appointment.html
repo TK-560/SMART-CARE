@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>SmartCare - Book Appointment</title>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <header class="header">
+            <div class="brand">SMARTCARE</div>
+            <div class="header-actions">
+                <span class="user-badge">{{ session.get('user') }} ·
+                    Appointments</span>
+                <a href="/logout" class="btn btn-logout">Logout</a>
+            </div>
+        </header>
+
+        <div class="main-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+            <div
+                class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}"
+                style="margin-bottom: 1rem;">{{ message }}</div>
+            {% endfor %}
+            {% endwith %}
+
+            <div class="step-header">
+                <span class="step-title">Scheduling / Step 1 of 1</span>
+                <span class="required-label">* Select required slot</span>
+            </div>
+
+            <h2>Book Appointment</h2>
+
+            <form action="/book_appointment" method="POST"
+                onsubmit="return validateAppointmentForm()">
+                <div class="form-section">
+                    <span class="section-title">Appointment Details</span>
+                    <div class="form-grid">
+<div class="form-group">
+                        <label for="patient_id">Select Patient </label>
+                        <input type="search" id="patient_search" placeholder="Search patient by number or name..." autocomplete="off">
+                        <select id="patient_id" name="patient_id" required>
+                            <option value="">Select Patient</option>
+                            {% for patient in patients %}
+                            <option value="{{ patient[0] }}">{{ patient[2] }}, {{ patient[1] }} (#{{ patient[0] }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                        <div class="form-group">
+                            <label for="doctor_id">Select Doctor </label>
+                            <select id="doctor_id" name="doctor_id" required>
+                                <option value>Select Doctor</option>
+                                {% for doctor in doctors %}
+                                <option value="{{ doctor[0] }}">{{ doctor[1] }}
+                                    ({{ doctor[2] }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment_date">Date </label>
+                            <input type="date" id="appointment_date"
+                                name="appointment_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment_time">Time Slot </label>
+                            <input type="time" id="appointment_time"
+                                name="appointment_time" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="notes">Clinical Notes</label>
+                            <textarea id="notes" name="notes" rows="3"
+                                placeholder="Reason for visit or symptoms..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a href="/dashboard" class="btn btn-secondary"
+                        style="width: auto;">Cancel</a>
+                    <button type="submit" class="btn btn-primary"
+                        style="width: auto;">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/register" class="nav-item">Registration</a>
+            <a href="/dashboard" class="nav-item">Dashboard</a>
+        </nav>
+
+        <script>
+        document.getElementById("patient_search").addEventListener("input", function () {
+            var query = this.value.toLowerCase();
+            var select = document.getElementById("patient_id");
+            var option = select.querySelector('option:not([value=""])');
+            var firstMatchValue = "";
+            for (var i = 0; i < select.options.length; i++) {
+                var opt = select.options[i];
+                if (opt.value === "") continue;
+                var label = opt.text.toLowerCase();
+                opt.hidden = query && label.indexOf(query) === -1;
+                if (firstMatchValue === "" && !opt.hidden) {
+                    firstMatchValue = opt.value;
+                }
+            }
+            select.selectedIndex = 0;
+            if (query && firstMatchValue !== "") {
+                select.value = firstMatchValue;
+            }
+        });
+
+        function validateAppointmentForm() {
+            var patientId = document.getElementById("patient_id").value;
+            var doctorId = document.getElementById("doctor_id").value;
+            var date = document.getElementById("appointment_date").value;
+            var time = document.getElementById("appointment_time").value;
+
+            if (!patientId) {
+                alert("Please select a patient.");
+                return false;
+            }
+            if (!doctorId) {
+                alert("Please select a doctor.");
+                return false;
+            }
+            if (!date) {
+                alert("Please select an appointment date.");
+                return false;
+            }
+            if (!time) {
+                alert("Please select an appointment time.");
+                return false;
+            }
+
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            var selected = new Date(date);
+            if (selected < today) {
+                alert("Appointment date cannot be in the past.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+    </body>
+</html>

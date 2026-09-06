@@ -1,0 +1,203 @@
+USE SmartCareDB;
+GO
+
+INSERT INTO Doctors
+    (FullName, Specialisation, PhoneNumber, Email)
+VALUES
+('Dr Sarah Smith', 'General Practitioner', '0115550001', 'sarah.smith@smartcare.co.za'),
+('Dr Thabo Naidoo', 'Paediatrician', '0115550002', 'thabo.naidoo@smartcare.co.za'),
+('Dr Lerato Mokoena', 'Dermatologist', '0115550003', 'lerato.mokoena@smartcare.co.za'),
+('Dr James Williams', 'Cardiologist', '0115550004', 'james.williams@smartcare.co.za'),
+('Dr Nomsa Dlamini', 'General Practitioner', '0115550005', 'nomsa.dlamini@smartcare.co.za'),
+('Dr Michael Jacobs', 'Orthopaedic Surgeon', '0115550006', 'michael.jacobs@smartcare.co.za'),
+('Dr Ayanda Ndlovu', 'Gynaecologist', '0115550007', 'ayanda.ndlovu@smartcare.co.za'),
+('Dr Sipho Mthembu', 'Neurologist', '0115550008', 'sipho.mthembu@smartcare.co.za'),
+('Dr Chloe Williams', 'Psychiatrist', '0115550009', 'chloe.williams@smartcare.co.za'),
+('Dr Kabelo Molefe', 'General Practitioner', '0115550010', 'kabelo.molefe@smartcare.co.za'),
+('Dr Zanele Khumalo', 'Paediatrician', '0115550011', 'zanele.khumalo@smartcare.co.za'),
+('Dr David Brown', 'Cardiologist', '0115550012', 'david.brown@smartcare.co.za'),
+('Dr Palesa Motsepe', 'Dermatologist', '0115550013', 'palesa.motsepe@smartcare.co.za'),
+('Dr Peter Johnson', 'ENT Specialist', '0115550014', 'peter.johnson@smartcare.co.za'),
+('Dr Naledi Maseko', 'General Practitioner', '0115550015', 'naledi.maseko@smartcare.co.za'),
+('Dr Ryan Adams', 'Urologist', '0115550016', 'ryan.adams@smartcare.co.za'),
+('Dr Busisiwe Cele', 'Gynaecologist', '0115550017', 'busisiwe.cele@smartcare.co.za'),
+('Dr Mark Thompson', 'Neurologist', '0115550018', 'mark.thompson@smartcare.co.za'),
+('Dr Karabo Molefe', 'General Practitioner', '0115550019', 'karabo.molefe@smartcare.co.za'),
+('Dr Amanda Peters', 'Psychiatrist', '0115550020', 'amanda.peters@smartcare.co.za'),
+('Dr Bongani Mkhize', 'Cardiologist', '0115550021', 'bongani.mkhize@smartcare.co.za'),
+('Dr Olivia Davis', 'Paediatrician', '0115550022', 'olivia.davis@smartcare.co.za'),
+('Dr Tshepo Radebe', 'Orthopaedic Surgeon', '0115550023', 'tshepo.radebe@smartcare.co.za'),
+('Dr Emma Wilson', 'General Practitioner', '0115550024', 'emma.wilson@smartcare.co.za'),
+('Dr Sibusiso Zulu', 'Dermatologist', '0115550025', 'sibusiso.zulu@smartcare.co.za'),
+('Dr Megan Taylor', 'Gynaecologist', '0115550026', 'megan.taylor@smartcare.co.za'),
+('Dr Gift Moyo', 'General Practitioner', '0115550027', 'gift.moyo@smartcare.co.za'),
+('Dr Daniel Miller', 'Cardiologist', '0115550028', 'daniel.miller@smartcare.co.za'),
+('Dr Thandeka Ngcobo', 'Paediatrician', '0115550029', 'thandeka.ngcobo@smartcare.co.za'),
+('Dr Luke Anderson', 'Neurologist', '0115550030', 'luke.anderson@smartcare.co.za'),
+('Dr Refilwe Modise', 'General Practitioner', '0115550031', 'refilwe.modise@smartcare.co.za'),
+('Dr William Moore', 'Urologist', '0115550032', 'william.moore@smartcare.co.za'),
+('Dr Nandi Sibeko', 'Psychiatrist', '0115550033', 'nandi.sibeko@smartcare.co.za'),
+('Dr Christopher Martin', 'ENT Specialist', '0115550034', 'christopher.martin@smartcare.co.za'),
+('Dr Lerato Seboko', 'General Practitioner', '0115550035', 'lerato.seboko@smartcare.co.za'),
+('Dr Robert Lee', 'Cardiologist', '0115550036', 'robert.lee@smartcare.co.za'),
+('Dr Amanda Nkosi', 'Dermatologist', '0115550037', 'amanda.nkosi@smartcare.co.za'),
+('Dr Ethan Walker', 'Orthopaedic Surgeon', '0115550038', 'ethan.walker@smartcare.co.za'),
+('Dr Portia Dube', 'Gynaecologist', '0115550039', 'portia.dube@smartcare.co.za'),
+('Dr Matthew Hall', 'General Practitioner', '0115550040', 'matthew.hall@smartcare.co.za'),
+('Dr Hlengiwe Maseko', 'Paediatrician', '0115550041', 'hlengiwe.maseko@smartcare.co.za'),
+('Dr Benjamin Young', 'Neurologist', '0115550042', 'benjamin.young@smartcare.co.za'),
+('Dr Nompumelelo Sithole', 'General Practitioner', '0115550043', 'nompumelelo.sithole@smartcare.co.za'),
+('Dr Andrew King', 'Cardiologist', '0115550044', 'andrew.king@smartcare.co.za'),
+('Dr Thembeka Mthethwa', 'Psychiatrist', '0115550045', 'thembeka.mthethwa@smartcare.co.za'),
+('Dr Samuel Wright', 'Urologist', '0115550046', 'samuel.wright@smartcare.co.za'),
+('Dr Precious Mokoena', 'Dermatologist', '0115550047', 'precious.mokoena@smartcare.co.za'),
+('Dr Joseph Scott', 'General Practitioner', '0115550048', 'joseph.scott@smartcare.co.za'),
+('Dr Nokuthula Hadebe', 'Paediatrician', '0115550049', 'nokuthula.hadebe@smartcare.co.za'),
+('Dr George Green', 'Cardiologist', '0115550050', 'george.green@smartcare.co.za');
+GO
+
+
+INSERT INTO Patients
+(
+    PatientNumber,
+    FirstName,
+    LastName,
+    IDNumber,
+    DateOfBirth,
+    Gender,
+    ContactNumber,
+    Email,
+    ResidentialAddress,
+    MedicalAidProvider,
+    MedicalAidNumber,
+    EmergencyContact,
+    RegistrationDate
+)
+VALUES
+('10000001','Thabo','Mokoena','9001015800081','1990-01-01','Male','0824000001','thabo.mokoena@email.com','12 Main Street, Bloemfontein','Discovery Health','DH100001','Lerato Mokoena - 0824000101','2026-08-01'),
+('10000002','Lerato','Dlamini','9102025800082','1991-02-02','Female','0824000002','lerato.dlamini@email.com','15 Park Road, Bloemfontein','Bonitas','BN100002','Sipho Dlamini - 0824000102','2026-08-01'),
+('10000003','Sipho','Naidoo','9203035800083','1992-03-03','Male','0824000003','sipho.naidoo@email.com','20 Church Street, Bloemfontein','Momentum Health','MH100003','Ayanda Naidoo - 0824000103','2026-08-02'),
+('10000004','Ayanda','Ndlovu','9304045800084','1993-04-04','Female','0824000004','ayanda.ndlovu@email.com','25 Nelson Road, Bloemfontein','Medihelp','MP100004','Sibusiso Ndlovu - 0824000104','2026-08-02'),
+('10000005','Kabelo','Molefe','9405055800085','1994-05-05','Male','0824000005','kabelo.molefe@email.com','30 Church Road, Bloemfontein','GEMS','GM100005','Palesa Molefe - 0824000105','2026-08-03'),
+('10000006','Nomsa','Khumalo','9506065800086','1995-06-06','Female','0824000006','nomsa.khumalo@email.com','32 Nelson Street, Bloemfontein','Discovery Health','DH100006','Bongani Khumalo - 0824000106','2026-08-03'),
+('10000007','James','Williams','9607075800087','1996-07-07','Male','0824000007','james.williams@email.com','40 First Avenue, Bloemfontein','Bonitas','BN100007','Sarah Williams - 0824000107','2026-08-04'),
+('10000008','Zanele','Mthembu','9708085800088','1997-08-08','Female','0824000008','zanele.mthembu@email.com','45 Second Avenue, Bloemfontein','Momentum Health','MH100008','Sipho Mthembu - 0824000108','2026-08-04'),
+('10000009','Michael','Jacobs','9809095800089','1998-09-09','Male','0824000009','michael.jacobs@email.com','50 Third Street, Bloemfontein','Medihelp','MP100009','Amanda Jacobs - 0824000109','2026-08-05'),
+('10000010','Palesa','Motsepe','9901015800090','1999-01-01','Female','0824000010','palesa.motsepe@email.com','55 Fourth Street, Bloemfontein','GEMS','GM100010','Kabelo Motsepe - 0824000110','2026-08-05'),
+('10000011','Bongani','Mkhize','8802025800091','1988-02-02','Male','0824000011','bongani.mkhize@email.com','60 Fifth Street, Bloemfontein','Discovery Health','DH100011','Nandi Mkhize - 0824000111','2026-08-06'),
+('10000012','Nandi','Sibeko','8903035800092','1989-03-03','Female','0824000012','nandi.sibeko@email.com','65 Sixth Street, Bloemfontein','Bonitas','BN100012','Bongani Sibeko - 0824000112','2026-08-06'),
+('10000013','Tshepo','Radebe','9004045800093','1990-04-04','Male','0824000013','tshepo.radebe@email.com','70 Seventh Avenue, Bloemfontein','Momentum Health','MH100013','Naledi Radebe - 0824000113','2026-08-07'),
+('10000014','Naledi','Maseko','9105055800094','1991-05-05','Female','0824000014','naledi.maseko@email.com','75 Eighth Avenue, Bloemfontein','Medihelp','MP100014','Tshepo Maseko - 0824000114','2026-08-07'),
+('10000015','Ryan','Adams','9206065800095','1992-06-06','Male','0824000015','ryan.adams@email.com','80 Ninth Street, Bloemfontein','GEMS','GM100015','Amanda Adams - 0824000115','2026-08-08'),
+('10000016','Amanda','Peters','9307075800096','1993-07-07','Female','0824000016','amanda.peters@email.com','85 Tenth Street, Bloemfontein','Discovery Health','DH100016','Ryan Peters - 0824000116','2026-08-08'),
+('10000017','Mark','Thompson','9408085800097','1994-08-08','Male','0824000017','mark.thompson@email.com','90 Main Road, Bloemfontein','Bonitas','BN100017','Emma Thompson - 0824000117','2026-08-09'),
+('10000018','Emma','Wilson','9509095800098','1995-09-09','Female','0824000018','emma.wilson@email.com','95 Park Road, Bloemfontein','Momentum Health','MH100018','Mark Wilson - 0824000118','2026-08-09'),
+('10000019','Sibusiso','Zulu','9601015800099','1996-01-01','Male','0824000019','sibusiso.zulu@email.com','100 Church Street, Bloemfontein','Medihelp','MP100019','Nokuthula Zulu - 0824000119','2026-08-10'),
+('10000020','Megan','Taylor','9702025800100','1997-02-02','Female','0824000020','megan.taylor@email.com','105 Nelson Street, Bloemfontein','GEMS','GM100020','Daniel Taylor - 0824000120','2026-08-10'),
+('10000021','Gift','Moyo','9803035800101','1998-03-03','Male','0824000021','gift.moyo@email.com','110 Main Street, Bloemfontein','Discovery Health','DH100021','Tendai Moyo - 0824000121','2026-08-11'),
+('10000022','Daniel','Miller','9904045800102','1999-04-04','Male','0824000022','daniel.miller@email.com','115 Park Street, Bloemfontein','Bonitas','BN100022','Jessica Miller - 0824000122','2026-08-11'),
+('10000023','Thandeka','Ngcobo','8805055800103','1988-05-05','Female','0824000023','thandeka.ngcobo@email.com','120 Church Road, Bloemfontein','Momentum Health','MH100023','Sibusiso Ngcobo - 0824000123','2026-08-12'),
+('10000024','Luke','Anderson','8906065800104','1989-06-06','Male','0824000024','luke.anderson@email.com','125 Nelson Road, Bloemfontein','Medihelp','MP100024','Emma Anderson - 0824000124','2026-08-12'),
+('10000025','Refilwe','Modise','9007075800105','1990-07-07','Female','0824000025','refilwe.modise@email.com','130 Main Avenue, Bloemfontein','GEMS','GM100025','Kabelo Modise - 0824000125','2026-08-13'),
+('10000026','William','Moore','9108085800106','1991-08-08','Male','0824000026','william.moore@email.com','135 Park Avenue, Bloemfontein','Discovery Health','DH100026','Linda Moore - 0824000126','2026-08-13'),
+('10000027','Nompumelelo','Sithole','9209095800107','1992-09-09','Female','0824000027','nompumelelo.sithole@email.com','140 First Street, Bloemfontein','Bonitas','BN100027','Bongani Sithole - 0824000127','2026-08-14'),
+('10000028','Andrew','King','9301015800108','1993-01-01','Male','0824000028','andrew.king@email.com','145 Second Street, Bloemfontein','Momentum Health','MH100028','Sarah King - 0824000128','2026-08-14'),
+('10000029','Thembeka','Mthethwa','9402025800109','1994-02-02','Female','0824000029','thembeka.mthethwa@email.com','150 Third Street, Bloemfontein','Medihelp','MP100029','Sifiso Mthethwa - 0824000129','2026-08-15'),
+('10000030','Samuel','Wright','9503035800110','1995-03-03','Male','0824000030','samuel.wright@email.com','155 Fourth Avenue, Bloemfontein','GEMS','GM100030','Emily Wright - 0824000130','2026-08-15'),
+('10000031','Precious','Mokoena','9604045800111','1996-04-04','Female','0824000031','precious.mokoena@email.com','160 Fifth Avenue, Bloemfontein','Discovery Health','DH100031','Kabelo Mokoena - 0824000131','2026-08-16'),
+('10000032','Joseph','Scott','9705055800112','1997-05-05','Male','0824000032','joseph.scott@email.com','165 Sixth Street, Bloemfontein','Bonitas','BN100032','Mary Scott - 0824000132','2026-08-16'),
+('10000033','Nokuthula','Hadebe','9806065800113','1998-06-06','Female','0824000033','nokuthula.hadebe@email.com','170 Seventh Street, Bloemfontein','Momentum Health','MH100033','Bongani Hadebe - 0824000133','2026-08-17'),
+('10000034','George','Green','9907075800114','1999-07-07','Male','0824000034','george.green@email.com','175 Eighth Street, Bloemfontein','Medihelp','MP100034','Susan Green - 0824000134','2026-08-17'),
+('10000035','Sarah','Brown','8808085800115','1988-08-08','Female','0824000035','sarah.brown@email.com','180 Ninth Avenue, Bloemfontein','GEMS','GM100035','David Brown - 0824000135','2026-08-18'),
+('10000036','David','Johnson','8909095800116','1989-09-09','Male','0824000036','david.johnson@email.com','185 Tenth Avenue, Bloemfontein','Discovery Health','DH100036','Linda Johnson - 0824000136','2026-08-18'),
+('10000037','Jessica','Adams','9001015800117','1990-01-01','Female','0824000037','jessica.adams@email.com','190 Main Street, Bloemfontein','Bonitas','BN100037','Ryan Adams - 0824000137','2026-08-19'),
+('10000038','Peter','Brown','9102025800118','1991-02-02','Male','0824000038','peter.brown@email.com','195 Park Street, Bloemfontein','Momentum Health','MH100038','Sarah Brown - 0824000138','2026-08-19'),
+('10000039','Linda','Davis','9203035800119','1992-03-03','Female','0824000039','linda.davis@email.com','200 Church Street, Bloemfontein','Medihelp','MP100039','Robert Davis - 0824000139','2026-08-20'),
+('10000040','Robert','Taylor','9304045800120','1993-04-04','Male','0824000040','robert.taylor@email.com','205 Nelson Street, Bloemfontein','GEMS','GM100040','Linda Taylor - 0824000140','2026-08-20'),
+('10000041','Emily','Walker','9405055800121','1994-05-05','Female','0824000041','emily.walker@email.com','210 Main Road, Bloemfontein','Discovery Health','DH100041','James Walker - 0824000141','2026-08-21'),
+('10000042','James','Hall','9506065800122','1995-06-06','Male','0824000042','james.hall@email.com','215 Park Road, Bloemfontein','Bonitas','BN100042','Emily Hall - 0824000142','2026-08-21'),
+('10000043','Mary','Young','9607075800123','1996-07-07','Female','0824000043','mary.young@email.com','220 Church Road, Bloemfontein','Momentum Health','MH100043','John Young - 0824000143','2026-08-22'),
+('10000044','John','King','9708085800124','1997-08-08','Male','0824000044','john.king@email.com','225 Nelson Road, Bloemfontein','Medihelp','MP100044','Mary King - 0824000144','2026-08-22'),
+('10000045','Susan','Wright','9809095800125','1998-09-09','Female','0824000045','susan.wright@email.com','230 Main Avenue, Bloemfontein','GEMS','GM100045','George Wright - 0824000145','2026-08-23'),
+('10000046','George','Adams','9901015800126','1999-01-01','Male','0824000046','george.adams@email.com','235 Park Avenue, Bloemfontein','Discovery Health','DH100046','Susan Adams - 0824000146','2026-08-23'),
+('10000047','Linda','Miller','8802025800127','1988-02-02','Female','0824000047','linda.miller@email.com','240 First Street, Bloemfontein','Bonitas','BN100047','Daniel Miller - 0824000147','2026-08-24'),
+('10000048','Daniel','Davis','8903035800128','1989-03-03','Male','0824000048','daniel.davis@email.com','245 Second Street, Bloemfontein','Momentum Health','MH100048','Linda Davis - 0824000148','2026-08-24'),
+('10000049','Susan','Wilson','9004045800129','1990-04-04','Female','0824000049','susan.wilson@email.com','250 Third Street, Bloemfontein','Medihelp','MP100049','Mark Wilson - 0824000149','2026-08-25'),
+('10000050','Mark','Anderson','9105055800130','1991-05-05','Male','0824000050','mark.anderson@email.com','255 Fourth Street, Bloemfontein','GEMS','GM100050','Susan Anderson - 0824000150','2026-08-25');
+GO
+
+INSERT INTO Appointments
+(
+    AppointmentDate,
+    AppointmentTime,
+    DoctorID,
+    PatientNumber,
+    AppointmentStatus,
+    Notes
+)
+VALUES
+('2026-09-02','08:00',1,'10000001','Confirmed','General consultation'),
+('2026-09-02','08:30',2,'10000002','Confirmed','Child wellness check'),
+('2026-09-02','09:00',3,'10000003','Pending','Skin consultation'),
+('2026-09-02','09:30',4,'10000004','Confirmed','Routine cardiac assessment'),
+('2026-09-02','10:00',5,'10000005','Pending','General consultation'),
+('2026-09-02','10:30',6,'10000006','Confirmed','Follow-up consultation'),
+('2026-09-02','11:00',7,'10000007','Confirmed','Routine examination'),
+('2026-09-02','11:30',8,'10000008','Pending','Neurology consultation'),
+('2026-09-02','12:00',9,'10000009','Confirmed','Mental health consultation'),
+('2026-09-02','13:00',10,'10000010','Confirmed','General consultation'),
+
+ 
+
+('2026-09-03','08:00',11,'10000011','Confirmed','Paediatric consultation'),
+('2026-09-03','08:30',12,'10000012','Pending','Cardiac assessment'),
+('2026-09-03','09:00',13,'10000013','Confirmed','Dermatology consultation'),
+('2026-09-03','09:30',14,'10000014','Confirmed','ENT consultation'),
+('2026-09-03','10:00',15,'10000015','Pending','General consultation'),
+('2026-09-03','10:30',16,'10000016','Confirmed','Urology consultation'),
+('2026-09-03','11:00',17,'10000017','Confirmed','Gynaecology consultation'),
+('2026-09-03','11:30',18,'10000018','Pending','Neurology follow-up'),
+('2026-09-03','12:00',19,'10000019','Confirmed','General consultation'),
+('2026-09-03','13:00',20,'10000020','Confirmed','Psychiatric consultation'),
+
+ 
+
+('2026-09-04','08:00',21,'10000021','Confirmed','Cardiology follow-up'),
+('2026-09-04','08:30',22,'10000022','Pending','Paediatric assessment'),
+('2026-09-04','09:00',23,'10000023','Confirmed','Orthopaedic consultation'),
+('2026-09-04','09:30',24,'10000024','Confirmed','General consultation'),
+('2026-09-04','10:00',25,'10000025','Pending','Dermatology follow-up'),
+('2026-09-04','10:30',26,'10000026','Confirmed','Gynaecology consultation'),
+('2026-09-04','11:00',27,'10000027','Confirmed','General consultation'),
+('2026-09-04','11:30',28,'10000028','Pending','Cardiac assessment'),
+('2026-09-04','12:00',29,'10000029','Confirmed','Paediatric consultation'),
+('2026-09-04','13:00',30,'10000030','Confirmed','Neurology consultation'),
+
+ 
+
+('2026-09-05','08:00',31,'10000031','Confirmed','General consultation'),
+('2026-09-05','08:30',32,'10000032','Pending','Urology consultation'),
+('2026-09-05','09:00',33,'10000033','Confirmed','Psychiatric consultation'),
+('2026-09-05','09:30',34,'10000034','Confirmed','ENT follow-up'),
+('2026-09-05','10:00',35,'10000035','Pending','General consultation'),
+('2026-09-05','10:30',36,'10000036','Confirmed','Cardiac assessment'),
+('2026-09-05','11:00',37,'10000037','Confirmed','Dermatology consultation'),
+('2026-09-05','11:30',38,'10000038','Pending','Orthopaedic follow-up'),
+('2026-09-05','12:00',39,'10000039','Confirmed','Gynaecology consultation'),
+('2026-09-05','13:00',40,'10000040','Confirmed','General consultation'),
+
+ 
+
+('2026-09-06','08:00',41,'10000041','Confirmed','Paediatric consultation'),
+('2026-09-06','08:30',42,'10000042','Pending','Neurology follow-up'),
+('2026-09-06','09:00',43,'10000043','Confirmed','General consultation'),
+('2026-09-06','09:30',44,'10000044','Confirmed','Cardiac consultation'),
+('2026-09-06','10:00',45,'10000045','Pending','Psychiatric consultation'),
+('2026-09-06','10:30',46,'10000046','Confirmed','Urology follow-up'),
+('2026-09-06','11:00',47,'10000047','Confirmed','Dermatology consultation'),
+('2026-09-06','11:30',48,'10000048','Pending','General consultation'),
+('2026-09-06','12:00',49,'10000049','Confirmed','Paediatric follow-up'),
+('2026-09-06','13:00',50,'10000050','Confirmed','Cardiology consultation');
+GO
+
+
