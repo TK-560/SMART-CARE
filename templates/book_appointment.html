@@ -6,14 +6,7 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <header class="header">
-            <div class="brand">SMARTCARE</div>
-            <div class="header-actions">
-                <span class="user-badge">{{ session.get('user') }} ·
-                    Appointments</span>
-                <a href="/logout" class="btn btn-logout">Logout</a>
-            </div>
-        </header>
+        {% include '_nav_panel.html' %}
 
         <div class="main-container">
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -82,11 +75,6 @@
                 </div>
             </form>
         </div>
-
-        <nav class="bottom-nav">
-            <a href="/register" class="nav-item">Registration</a>
-            <a href="/dashboard" class="nav-item">Dashboard</a>
-        </nav>
 
         <script>
         document.getElementById("patient_search").addEventListener("input", function () {
