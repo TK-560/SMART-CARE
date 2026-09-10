@@ -205,6 +205,127 @@ def book_appointment():
 
     return render_template("book_appointment.html", patients=patients, doctors=doctors)
 
+# Doctor Management
+
+
+@app.route("/doctors")
+def doctors():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    conn = get_connection()
+    all_doctors = []
+
+    if conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT DoctorID, FullName, Specialisation, PhoneNumber, Email FROM Doctors ORDER BY FullName")
+        all_doctors = cursor.fetchall()
+        conn.close()
+
+    return render_template("all_doctors.html", doctors=all_doctors)
+
+
+@app.route("/add_doctor", methods=["GET", "POST"])
+def add_doctor():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        full_name = request.form.get("full_name").strip()
+        specialisation = request.form.get("specialisation").strip()
+        phone_number = request.form.get("phone_number").strip()
+        email = request.form.get("email").strip()
+
+        if not full_name or not specialisation:
+            flash("Full name and specialisation are required.", "error")
+            return render_template("add_doctor.html")
+
+        conn = get_connection()
+        if conn:
+            cursor = conn.cursor()
+            try:
+                cursor.execute(
+                    "INSERT INTO Doctors (FullName, Specialisation, PhoneNumber, Email) VALUES (?, ?, ?, ?)",
+                    (full_name, specialisation, phone_number or None, email or None))
+                conn.commit()
+                conn.close()
+                flash("Doctor added successfully.", "success")
+                return redirect(url_for("doctors"))
+            except Exception as e:
+                print("Error adding doctor:", e)
+                conn.close()
+                flash("Could not add doctor. Please try again.", "error")
+
+    return render_template("add_doctor.html")
+
+
+@app.route("/edit_doctor/<int:doctor_id>", methods=["GET", "POST"])
+def edit_doctor(doctor_id):
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    conn = get_connection()
+    doctor = None
+
+    if conn:
+        cursor = conn.cursor()
+
+        if request.method == "POST":
+            full_name = request.form.get("full_name").strip()
+            specialisation = request.form.get("specialisation").strip()
+            phone_number = request.form.get("phone_number").strip()
+            email = request.form.get("email").strip()
+
+            if not full_name or not specialisation:
+                flash("Full name and specialisation are required.", "error")
+            else:
+                try:
+                    cursor.execute(
+                        "UPDATE Doctors SET FullName = ?, Specialisation = ?, PhoneNumber = ?, Email = ? WHERE DoctorID = ?",
+                        (full_name, specialisation, phone_number or None, email or None, doctor_id))
+                    conn.commit()
+                    conn.close()
+                    flash("Doctor updated successfully.", "success")
+                    return redirect(url_for("doctors"))
+                except Exception as e:
+                    print("Error updating doctor:", e)
+                    flash("Could not update doctor. Please try again.", "error")
+
+        cursor.execute(
+            "SELECT DoctorID, FullName, Specialisation, PhoneNumber, Email FROM Doctors WHERE DoctorID = ?",
+            (doctor_id,))
+        doctor = cursor.fetchone()
+        conn.close()
+
+    if not doctor:
+        flash("Doctor not found.", "error")
+        return redirect(url_for("doctors"))
+
+    return render_template("edit_doctor.html", doctor=doctor)
+
+
+@app.route("/delete_doctor/<int:doctor_id>", methods=["POST"])
+def delete_doctor(doctor_id):
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    conn = get_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            cursor.execute("DELETE FROM Doctors WHERE DoctorID = ?", (doctor_id,))
+            conn.commit()
+            conn.close()
+            flash("Doctor deleted successfully.", "success")
+        except Exception as e:
+            print("Error deleting doctor:", e)
+            conn.close()
+            flash("Could not delete doctor. They may have existing appointments.", "error")
+
+    return redirect(url_for("doctors"))
+
+
 # Dashboard
 
 

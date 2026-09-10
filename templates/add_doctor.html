@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCare - Add Doctor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1rem;">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="step-header">
+            <span class="step-title">Add New Doctor</span>
+            <span class="required-label">* Required fields</span>
+        </div>
+
+        <h2>Add Doctor</h2>
+
+        <form action="/add_doctor" method="POST" onsubmit="return validateDoctorForm()">
+            <div class="form-section">
+                <span class="section-title">Doctor Information</span>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="full_name">Full Name *</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialisation">Specialisation *</label>
+                        <select id="specialisation" name="specialisation" required>
+                            <option value="">Select Specialisation</option>
+                            <option value="General Practice">General Practice</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Endocrinology">Endocrinology</option>
+                            <option value="Gastroenterology">Gastroenterology</option>
+                            <option value="Internal Medicine">Internal Medicine</option>
+                            <option value="Nephrology">Nephrology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
+                            <option value="Oncology">Oncology</option>
+                            <option value="Ophthalmology">Ophthalmology</option>
+                            <option value="Orthopaedics">Orthopaedics</option>
+                            <option value="Paediatrics">Paediatrics</option>
+                            <option value="Psychiatry">Psychiatry</option>
+                            <option value="Pulmonology">Pulmonology</option>
+                            <option value="Urology">Urology</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number">Phone Number</label>
+                        <input type="tel" id="phone_number" name="phone_number">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="/doctors" class="btn btn-secondary" style="width: auto;">Cancel</a>
+                <button type="submit" class="btn btn-primary" style="width: auto;">Add Doctor</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateDoctorForm() {
+            var fullName = document.getElementById("full_name").value.trim();
+            var specialisation = document.getElementById("specialisation").value;
+
+            if (!fullName) {
+                alert("Please enter the doctor's full name.");
+                return false;
+            }
+            if (!specialisation) {
+                alert("Please select a specialisation.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
