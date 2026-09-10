@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCare - Edit Doctor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1rem;">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="step-header">
+            <span class="step-title">Edit Doctor Information</span>
+            <span class="required-label">* Required fields</span>
+        </div>
+
+        <h2>Edit Doctor</h2>
+
+        <form action="/edit_doctor/{{ doctor[0] }}" method="POST" onsubmit="return validateDoctorForm()">
+            <div class="form-section">
+                <span class="section-title">Doctor Information</span>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="full_name">Full Name *</label>
+                        <input type="text" id="full_name" name="full_name" value="{{ doctor[1] }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialisation">Specialisation *</label>
+                        <select id="specialisation" name="specialisation" required>
+                            <option value="">Select Specialisation</option>
+                            <option value="General Practice" {{ 'selected' if doctor[2] == 'General Practice' }}>General Practice</option>
+                            <option value="Cardiology" {{ 'selected' if doctor[2] == 'Cardiology' }}>Cardiology</option>
+                            <option value="Dermatology" {{ 'selected' if doctor[2] == 'Dermatology' }}>Dermatology</option>
+                            <option value="Endocrinology" {{ 'selected' if doctor[2] == 'Endocrinology' }}>Endocrinology</option>
+                            <option value="Gastroenterology" {{ 'selected' if doctor[2] == 'Gastroenterology' }}>Gastroenterology</option>
+                            <option value="Internal Medicine" {{ 'selected' if doctor[2] == 'Internal Medicine' }}>Internal Medicine</option>
+                            <option value="Nephrology" {{ 'selected' if doctor[2] == 'Nephrology' }}>Nephrology</option>
+                            <option value="Neurology" {{ 'selected' if doctor[2] == 'Neurology' }}>Neurology</option>
+                            <option value="Obstetrics & Gynaecology" {{ 'selected' if doctor[2] == 'Obstetrics & Gynaecology' }}>Obstetrics & Gynaecology</option>
+                            <option value="Oncology" {{ 'selected' if doctor[2] == 'Oncology' }}>Oncology</option>
+                            <option value="Ophthalmology" {{ 'selected' if doctor[2] == 'Ophthalmology' }}>Ophthalmology</option>
+                            <option value="Orthopaedics" {{ 'selected' if doctor[2] == 'Orthopaedics' }}>Orthopaedics</option>
+                            <option value="Paediatrics" {{ 'selected' if doctor[2] == 'Paediatrics' }}>Paediatrics</option>
+                            <option value="Psychiatry" {{ 'selected' if doctor[2] == 'Psychiatry' }}>Psychiatry</option>
+                            <option value="Pulmonology" {{ 'selected' if doctor[2] == 'Pulmonology' }}>Pulmonology</option>
+                            <option value="Urology" {{ 'selected' if doctor[2] == 'Urology' }}>Urology</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number">Phone Number</label>
+                        <input type="tel" id="phone_number" name="phone_number" value="{{ doctor[3] or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="{{ doctor[4] or '' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="/doctors" class="btn btn-secondary" style="width: auto;">Cancel</a>
+                <button type="submit" class="btn btn-primary" style="width: auto;">Update Doctor</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateDoctorForm() {
+            var fullName = document.getElementById("full_name").value.trim();
+            var specialisation = document.getElementById("specialisation").value;
+
+            if (!fullName) {
+                alert("Please enter the doctor's full name.");
+                return false;
+            }
+            if (!specialisation) {
+                alert("Please select a specialisation.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
