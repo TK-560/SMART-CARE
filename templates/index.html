@@ -1,806 +1,155 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Healthcare Management System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <a class="brand" href="/" style="text-decoration: none; color: var(--text-main);">SMARTCARE</a>
 
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Smart Care - Modern Healthcare Platform</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        "colors": {
-          "tertiary-fixed-dim": "#71d2ff",
-          "on-secondary": "#ffffff",
-          "primary-fixed-dim": "#a9c7ff",
-          "surface-container-low": "#eaf5ff",
-          "on-tertiary-fixed": "#001e2b",
-          "on-secondary-fixed-variant": "#004f55",
-          "surface-container-lowest": "#ffffff",
-          "tertiary-container": "#006788",
-          "secondary-fixed-dim": "#5ed7e3",
-          "on-error-container": "#93000a",
-          "surface-dim": "#c8ddee",
-          "surface-bright": "#f6faff",
-          "on-surface": "#091e2a",
-          "on-error": "#ffffff",
-          "on-secondary-container": "#006e75",
-          "on-primary-fixed": "#001b3d",
-          "on-primary-fixed-variant": "#00468c",
-          "surface": "#f6faff",
-          "on-primary": "#ffffff",
-          "surface-tint": "#005db6",
-          "on-tertiary": "#ffffff",
-          "primary-fixed": "#d6e3ff",
-          "primary": "#00478d",
-          "tertiary-fixed": "#c0e8ff",
-          "on-secondary-fixed": "#002022",
-          "secondary": "#006970",
-          "inverse-primary": "#a9c7ff",
-          "surface-variant": "#d1e5f6",
-          "surface-container-high": "#d6ebfc",
-          "secondary-container": "#7af1fd",
-          "on-tertiary-fixed-variant": "#004d66",
-          "primary-container": "#005eb8",
-          "surface-container": "#dff0ff",
-          "on-tertiary-container": "#abe1ff",
-          "outline": "#727783",
-          "tertiary": "#004e67",
-          "on-primary-container": "#c8daff",
-          "on-background": "#091e2a",
-          "error-container": "#ffdad6",
-          "error": "#ba1a1a",
-          "inverse-on-surface": "#e5f2ff",
-          "background": "#f6faff",
-          "on-surface-variant": "#424752",
-          "surface-container-highest": "#d1e5f6",
-          "secondary-fixed": "#80f4ff",
-          "inverse-surface": "#1f333f",
-          "outline-variant": "#c2c6d4"
-        },
-        "borderRadius": {
-          "DEFAULT": "0.125rem",
-          "lg": "0.25rem",
-          "xl": "0.5rem",
-          "full": "0.75rem"
-        },
-        "spacing": {
-          "2xl": "48px",
-          "xs": "4px",
-          "gutter": "24px",
-          "xl": "32px",
-          "lg": "24px",
-          "sm": "8px",
-          "md": "16px",
-          "base": "4px",
-          "margin-mobile": "16px",
-          "max-width": "1440px",
-          "margin-desktop": "32px"
-        },
-        "fontFamily": {
-          "headline-lg-mobile": [
-            "Inter"
-          ],
-          "label-sm": [
-            "Inter"
-          ],
-          "body-sm": [
-            "Inter"
-          ],
-          "headline-lg": [
-            "Inter"
-          ],
-          "headline-md": [
-            "Inter"
-          ],
-          "body-md": [
-            "Inter"
-          ],
-          "body-lg": [
-            "Inter"
-          ],
-          "headline-sm": [
-            "Inter"
-          ],
-          "label-md": [
-            "Inter"
-          ],
-          "code": [
-            "Inter"
-          ]
-        },
-        "fontSize": {
-          "headline-lg-mobile": [
-            "26px",
-            {
-              "lineHeight": "32px",
-              "letterSpacing": "-0.01em",
-              "fontWeight": "700"
-            }
-          ],
-          "label-sm": [
-            "12px",
-            {
-              "lineHeight": "16px",
-              "fontWeight": "500"
-            }
-          ],
-          "body-sm": [
-            "14px",
-            {
-              "lineHeight": "20px",
-              "fontWeight": "400"
-            }
-          ],
-          "headline-lg": [
-            "32px",
-            {
-              "lineHeight": "40px",
-              "letterSpacing": "-0.02em",
-              "fontWeight": "700"
-            }
-          ],
-          "headline-md": [
-            "24px",
-            {
-              "lineHeight": "32px",
-              "letterSpacing": "-0.01em",
-              "fontWeight": "600"
-            }
-          ],
-          "body-md": [
-            "16px",
-            {
-              "lineHeight": "24px",
-              "fontWeight": "400"
-            }
-          ],
-          "body-lg": [
-            "18px",
-            {
-              "lineHeight": "28px",
-              "fontWeight": "400"
-            }
-          ],
-          "headline-sm": [
-            "20px",
-            {
-              "lineHeight": "28px",
-              "fontWeight": "600"
-            }
-          ],
-          "label-md": [
-            "14px",
-            {
-              "lineHeight": "20px",
-              "letterSpacing": "0.05em",
-              "fontWeight": "600"
-            }
-          ],
-          "code": [
-            "14px",
-            {
-              "lineHeight": "20px",
-              "fontWeight": "400"
-            }
-          ]
-        }
-      },
-    },
-  }</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop flex items-center justify-between"><div class="flex items-center gap-xl"><a class="flex items-center gap-sm text-primary" data-path="landing-page" href="#"><span class="material-symbols-outlined text-[28px]">health_and_safety</span><span class="font-headline-sm text-headline-sm tracking-tight text-primary">Smart Care</span></a><nav class="hidden lg:flex items-center gap-md" data-active-classes="bg-surface-container text-primary font-label-md text-label-md rounded-lg"><a class="px-md py-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="features" href="#">Features</a><a class="px-md py-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="solutions" href="#">Solutions</a><a class="px-md py-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="for-clinics" href="#">For Clinics</a><a class="px-md py-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="security" href="#">Security</a><a class="px-md py-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="about-us" href="#">About Us</a></nav></div><div class="flex items-center gap-md"><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors px-sm py-xs" data-path="sign-in" href="/login">Sign In</a><a class="hidden sm:inline-flex items-center justify-center font-label-md text-label-md bg-primary hover:bg-primary-container text-on-primary hover:text-on-primary transition-colors px-lg py-sm rounded-lg" data-path="sign-up" href="/signup">Sign Up</a><a class="hidden lg:inline-flex items-center justify-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors px-lg py-sm" data-path="book-a-demo" href="#">Book a Demo</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background"><div class="flex flex-col w-full">
-<!-- Hero Section with Ambient Clinical Depth -->
-<section class="relative w-full overflow-hidden bg-gradient-to-b from-surface-container-low/60 via-background to-background pt-12 pb-20 lg:pt-16 lg:pb-28">
-<div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[920px] h-[340px] bg-gradient-to-tr from-secondary-fixed/30 via-primary-fixed/40 to-transparent blur-3xl pointer-events-none -z-10"></div>
-<div class="max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-<!-- Hero Text Content -->
-<div class="lg:col-span-6 flex flex-col gap-6">
-<div class="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full bg-surface-container text-primary shadow-sm">
-<span class="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-<span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">Clinical Suite 4.2 Live</span>
-<span class="text-outline-variant font-body-sm text-body-sm">•</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">HIPAA &amp; GDPR Verified</span>
-</div>
-<h1 class="font-headline-lg text-headline-lg lg:text-[44px] lg:leading-[52px] text-on-surface tracking-tight font-bold">
-            Next-Generation Healthcare Administration <span class="text-primary">Made Simple</span>
-</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-            Streamline patient registration, clinical records, appointment scheduling, and medical aid verification in one secure, unified platform.
-          </p>
-<!-- Dual CTAs -->
-<div class="flex flex-wrap items-center gap-4 pt-2">
-<a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-on-primary rounded-xl font-headline-sm text-headline-sm hover:bg-primary-container transition-all duration-200 shadow-md hover:shadow-lg group" data-path="book-a-demo" href="#">
-<span>Start Free Trial</span>
-<span class="material-symbols-outlined text-[20px] transition-transform duration-200 group-hover:translate-x-1">arrow_forward</span>
-</a>
-<button class="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-surface-container-lowest text-primary rounded-xl font-headline-sm text-headline-sm hover:bg-surface-container-low transition-colors shadow-sm" id="openVideoDemo" type="button">
-<span class="material-symbols-outlined text-secondary text-[22px]" style="font-variation-settings: 'FILL' 1;">play_circle</span>
-<span>Watch 2-Min Demo</span>
-</button>
-</div>
-<!-- Micro Compliance Checklist -->
-<div class="flex flex-wrap items-center gap-y-2 gap-x-6 pt-3 text-on-surface-variant font-body-sm text-body-sm">
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
-<span>No credit card required</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
-<span>14-day full pilot access</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
-<span>One-click EHR migration</span>
-</div>
-</div>
-</div>
-<!-- Hero Visual Mockup: Smart Care Live Clinical Console -->
-<div class="lg:col-span-6 relative">
-<div class="relative mx-auto w-full max-w-[560px] bg-surface-container-lowest rounded-2xl shadow-xl overflow-hidden">
-<!-- Dashboard Frame Header -->
-<div class="flex items-center justify-between px-5 py-3.5 bg-surface-container-high/70">
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-error/70"></div>
-<div class="w-3 h-3 rounded-full bg-secondary-container"></div>
-<div class="w-3 h-3 rounded-full bg-secondary"></div>
-<span class="ml-2 font-code text-code text-xs text-on-surface-variant font-medium">smartcare-os.internal/clinic/triage</span>
-</div>
-<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-surface-container-lowest text-secondary font-label-sm text-label-sm font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
-<span>System Sync: OK</span>
-</div>
-</div>
-<!-- Dashboard Content Snapshot -->
-<div class="p-5 flex flex-col gap-4 bg-surface-container-lowest">
-<!-- Quick Triage Stats -->
-<div class="grid grid-cols-3 gap-3">
-<div class="bg-surface-container-low p-3 rounded-xl flex flex-col">
-<span class="text-xs font-medium text-on-surface-variant">Live Patients</span>
-<span class="font-headline-md text-headline-md text-primary mt-1 font-bold">142</span>
-<span class="text-[11px] text-secondary font-semibold mt-0.5">↑ 12 vs yesterday</span>
-</div>
-<div class="bg-surface-container-low p-3 rounded-xl flex flex-col">
-<span class="text-xs font-medium text-on-surface-variant">Avg Wait Time</span>
-<span class="font-headline-md text-headline-md text-on-surface mt-1 font-bold">6.5m</span>
-<span class="text-[11px] text-secondary font-semibold mt-0.5">-42% clinic target</span>
-</div>
-<div class="bg-surface-container-low p-3 rounded-xl flex flex-col">
-<span class="text-xs font-medium text-on-surface-variant">Aid Verification</span>
-<span class="font-headline-md text-headline-md text-secondary mt-1 font-bold">99.4%</span>
-<span class="text-[11px] text-on-surface-variant mt-0.5">Real-time EDI API</span>
-</div>
-</div>
-<!-- Real-time Admission Queue Table -->
-<div class="rounded-xl bg-surface p-3 flex flex-col gap-2.5 shadow-sm">
-<div class="flex items-center justify-between pb-1">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-[20px]">badge</span>
-<span class="font-headline-sm text-headline-sm text-on-surface">Live Admissions Queue</span>
-</div>
-<span class="px-2 py-0.5 bg-primary-fixed text-primary text-xs rounded font-medium">Batch #094</span>
-</div>
-<!-- Row 1 -->
-<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors text-xs">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-primary">EK</div>
-<div>
-<div class="font-semibold text-on-surface">Elena Kovacs (ID: 940211-****)</div>
-<div class="text-[11px] text-on-surface-variant">Trauma Care • Dr. V. Aris</div>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-secondary font-semibold text-[11px]">
-<span class="material-symbols-outlined text-[13px]">verified</span> Discovery Health
-                    </span>
-<span class="px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-bold text-[11px]">Admitted</span>
-</div>
-</div>
-<!-- Row 2 -->
-<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors text-xs">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center font-bold text-tertiary">TM</div>
-<div>
-<div class="font-semibold text-on-surface">Tariq Mokoena (ID: 880625-****)</div>
-<div class="text-[11px] text-on-surface-variant">Cardiology Check • Fast-Track</div>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-secondary font-semibold text-[11px]">
-<span class="material-symbols-outlined text-[13px]">verified</span> Bonitas Gold
-                    </span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-bold text-[11px]">In Triage</span>
-</div>
-</div>
-<!-- Live Notification Pill -->
-<div class="flex items-center gap-2 p-2 rounded-lg bg-surface-container-low text-xs text-on-surface-variant">
-<span class="material-symbols-outlined text-secondary text-[16px]">bolt</span>
-<span class="font-medium">National Registry Synced 12s ago • 0 manual interventions required</span>
-</div>
-</div>
-<!-- Interactive Floating Prompt inside Card -->
-<div class="flex items-center justify-between pt-1">
-<div class="flex items-center gap-2 text-xs text-on-surface-variant">
-<span class="material-symbols-outlined text-[18px] text-secondary">encrypted</span>
-<span>AES-256 GCM In-Flight Encryption Active</span>
-</div>
-<a class="text-xs font-semibold text-primary hover:underline flex items-center gap-0.5" data-path="solutions" href="#">
-                  Launch Full Console <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Trust Strip & Logo Showcase -->
-<div class="mt-16 pt-8 bg-surface-container-low/40 rounded-2xl p-6 lg:p-8">
-<p class="text-center font-label-md text-label-md text-on-surface-variant font-semibold tracking-wider uppercase mb-6">
-          Trusted by 500+ clinics, multi-specialty hospitals, and care networks
-        </p>
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-items-center opacity-80">
-<div class="flex items-center gap-2 text-on-surface-variant font-bold text-sm tracking-tight hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined text-primary text-[28px]">local_hospital</span>
-<span>AURA HEALTH</span>
-</div>
-<div class="flex items-center gap-2 text-on-surface-variant font-bold text-sm tracking-tight hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined text-primary text-[28px]">domain_add</span>
-<span>METRO CLINICS</span>
-</div>
-<div class="flex items-center gap-2 text-on-surface-variant font-bold text-sm tracking-tight hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined text-primary text-[28px]">medical_services</span>
-<span>ST. JUDE NETWORK</span>
-</div>
-<div class="flex items-center gap-2 text-on-surface-variant font-bold text-sm tracking-tight hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined text-primary text-[28px]">emergency</span>
-<span>BEACON CARE</span>
-</div>
-<div class="flex items-center gap-2 text-on-surface-variant font-bold text-sm tracking-tight hover:opacity-100 transition-opacity col-span-2 md:col-span-1">
-<span class="material-symbols-outlined text-primary text-[28px]">clinical_notes</span>
-<span>APEX REGIONAL</span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Metrics / Impact Banner (Section 4 placed early for high credibility) -->
-<section class="w-full bg-primary text-on-primary py-12">
-<div class="max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop">
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center divide-y-0">
-<div class="flex flex-col items-center">
-<span class="font-headline-lg text-[40px] lg:text-[48px] font-bold leading-none tracking-tight text-white">99.99%</span>
-<span class="font-label-md text-label-md text-on-primary-container mt-2 font-medium">Uptime Guarantee SLA</span>
-</div>
-<div class="flex flex-col items-center">
-<span class="font-headline-lg text-[40px] lg:text-[48px] font-bold leading-none tracking-tight text-secondary-container">45%</span>
-<span class="font-label-md text-label-md text-on-primary-container mt-2 font-medium">Faster Patient Intake</span>
-</div>
-<div class="flex flex-col items-center">
-<span class="font-headline-lg text-[40px] lg:text-[48px] font-bold leading-none tracking-tight text-white">1.2M+</span>
-<span class="font-label-md text-label-md text-on-primary-container mt-2 font-medium">Patient Records Managed</span>
-</div>
-<div class="flex flex-col items-center">
-<span class="font-headline-lg text-[40px] lg:text-[48px] font-bold leading-none tracking-tight text-secondary-container">SOC 2 • HIPAA</span>
-<span class="font-label-md text-label-md text-on-primary-container mt-2 font-medium">Zero-Trust Architecture</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Key Capabilities & Features Grid (Section 2) -->
-<section class="w-full py-20 lg:py-28 bg-surface">
-<div class="max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop">
-<!-- Section Heading -->
-<div class="flex flex-col items-center text-center max-w-2xl mx-auto mb-16">
-<span class="font-label-md text-label-md text-secondary font-bold uppercase tracking-widest mb-2">Engineered For Healthcare Efficiency</span>
-<h2 class="font-headline-lg text-headline-lg lg:text-[36px] text-on-surface font-bold tracking-tight">
-          Everything Your Clinic Needs To Operate at Peak Precision
-        </h2>
-<p class="font-body-md text-body-md text-on-surface-variant mt-3">
-          Designed hand-in-hand with medical officers and administrators to replace clunky legacy paper trails with instant, error-free automated workflows.
-        </p>
-</div>
-<!-- 4-Card Feature Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<!-- Card 1 -->
-<div class="bg-surface-container-lowest p-7 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-<div>
-<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[26px]">how_to_reg</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-2">
-              Instant Patient Onboarding &amp; SQL-ready Records
-            </h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-              Automated validation for 13-digit national ID numbers, automated generation of unique patient barcodes, and digital next-of-kin indexing.
-            </p>
-</div>
-<div class="mt-6 pt-4 flex items-center text-primary font-headline-sm text-xs font-semibold">
-<span>Automated validation active</span>
-<span class="material-symbols-outlined text-[16px] ml-1">arrow_forward</span>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="bg-surface-container-lowest p-7 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-<div>
-<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[26px]">credit_card_clock</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-2">
-              Automated Medical Aid &amp; Insurance Claims
-            </h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-              Instant electronic medical scheme verification and direct tariff code matching. Reduce claim rejection rates from 18% down to near-zero.
-            </p>
-</div>
-<div class="mt-6 pt-4 flex items-center text-secondary font-headline-sm text-xs font-semibold">
-<span>Direct switch integration</span>
-<span class="material-symbols-outlined text-[16px] ml-1">arrow_forward</span>
-</div>
-</div>
-<!-- Card 3 -->
-<div class="bg-surface-container-lowest p-7 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-<div>
-<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[26px]">schedule</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-2">
-              Smart Scheduling &amp; Queue Management
-            </h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-              Eliminate waiting room bottlenecks with live triage queues, SMS notifications for upcoming slots, and intelligent room allocation matrices.
-            </p>
-</div>
-<div class="mt-6 pt-4 flex items-center text-primary font-headline-sm text-xs font-semibold">
-<span>Live waiting room sync</span>
-<span class="material-symbols-outlined text-[16px] ml-1">arrow_forward</span>
-</div>
-</div>
-<!-- Card 4 -->
-<div class="bg-surface-container-lowest p-7 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-<div>
-<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[26px]">shield_person</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-2">
-              Bank-Grade HIPAA &amp; GDPR Security
-            </h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-              End-to-end encrypted records with role-based admin controls, granular audit logs, and automatic data residency compliance guaranteed.
-            </p>
-</div>
-<div class="mt-6 pt-4 flex items-center text-secondary font-headline-sm text-xs font-semibold">
-<span>Full audit trial history</span>
-<span class="material-symbols-outlined text-[16px] ml-1">arrow_forward</span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Interactive / Feature Spotlight Section (Section 3: Admin Experience) -->
-<section class="w-full py-20 bg-surface-container-low/50">
-<div class="max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-<!-- Left: Contextual Narrative -->
-<div class="lg:col-span-5 flex flex-col gap-6">
-<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-surface-container text-primary font-label-sm text-label-sm font-semibold self-start">
-<span class="material-symbols-outlined text-[16px]">admin_panel_settings</span>
-            ADMIN &amp; CLINICAL DESK
-          </div>
-<h2 class="font-headline-lg text-headline-lg lg:text-[36px] text-on-surface font-bold tracking-tight">
-            Designed specifically for Clinic Administrators &amp; Medical Staff
-          </h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant">
-            Healthcare personnel shouldn't spend half their shifts wrangling clunky databases. Smart Care turns hours of tedious paperwork into a lightning-fast, zero-friction experience.
-          </p>
-<!-- Key Checklist Points -->
-<div class="flex flex-col gap-4 pt-2">
-<div class="flex items-start gap-3 bg-surface-container-lowest p-4 rounded-xl shadow-sm">
-<span class="material-symbols-outlined text-secondary text-[24px] shrink-0 mt-0.5">timer</span>
-<div>
-<h4 class="font-headline-sm text-body-lg font-semibold text-on-surface">Register patients in under 60 seconds</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Automated document OCR scans physical IDs, parsing demographic details without typo errors.</p>
-</div>
-</div>
-<div class="flex items-start gap-3 bg-surface-container-lowest p-4 rounded-xl shadow-sm">
-<span class="material-symbols-outlined text-primary text-[24px] shrink-0 mt-0.5">cloud_done</span>
-<div>
-<h4 class="font-headline-sm text-body-lg font-semibold text-on-surface">Zero data loss with real-time offline sync</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Local cache keeps receptionists running even during sudden hospital connectivity blackouts.</p>
-</div>
-</div>
-<div class="flex items-start gap-3 bg-surface-container-lowest p-4 rounded-xl shadow-sm">
-<span class="material-symbols-outlined text-secondary text-[24px] shrink-0 mt-0.5">policy</span>
-<div>
-<h4 class="font-headline-sm text-body-lg font-semibold text-on-surface">Compliant record archiving</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Strict compliance rules retain health records safely for statutory 10-year windows automatically.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Right: Interactive Workflow Simulator -->
-<div class="lg:col-span-7">
-<div class="bg-surface-container-lowest rounded-2xl shadow-xl overflow-hidden p-6 lg:p-8 flex flex-col gap-6">
-<div class="flex items-center justify-between">
-<div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Live Patient Registration Sandbox</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Try rapid-intake validation controls below</p>
-</div>
-<span class="px-3 py-1 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-semibold">
-                Instant Verification Mode
-              </span>
-</div>
-<!-- Form Simulation Mockup -->
-<form class="grid grid-cols-1 md:grid-cols-2 gap-4" id="sandboxForm" onsubmit="event.preventDefault();">
-<div class="flex flex-col gap-1">
-<label class="font-label-sm text-label-sm text-on-surface font-medium">National Identity / Civil Registration</label>
-<div class="relative">
-<input class="w-full px-3.5 py-2.5 bg-surface rounded-lg text-on-surface font-code text-code text-sm focus:outline-none focus:ring-2 focus:ring-primary shadow-inner" id="idInput" placeholder="Enter 13-digit ID" type="text" value="940211 5082 08 4"/>
-<span class="absolute right-3 top-2.5 material-symbols-outlined text-secondary text-[20px]" id="idValidBadge">check_circle</span>
-</div>
-</div>
-<div class="flex flex-col gap-1">
-<label class="font-label-sm text-label-sm text-on-surface font-medium">Medical Aid Fund &amp; Scheme</label>
-<div class="relative">
-<input class="w-full px-3.5 py-2.5 bg-surface rounded-lg text-on-surface font-body-sm text-sm" readonly="" type="text" value="Discovery Health - Classic Comprehensive"/>
-<span class="absolute right-3 top-2.5 text-secondary font-label-sm text-label-sm font-bold">ACTIVE</span>
-</div>
-</div>
-<div class="flex flex-col gap-1">
-<label class="font-label-sm text-label-sm text-on-surface font-medium">Assigned Department</label>
-<select class="w-full px-3.5 py-2.5 bg-surface rounded-lg text-on-surface font-body-sm text-sm focus:outline-none">
-<option>General Outpatient (OPD)</option>
-<option>Pediatrics &amp; Neonatal Care</option>
-<option>Orthopedic Surgery</option>
-<option>Urgent Primary Care</option>
-</select>
-</div>
-<div class="flex flex-col gap-1">
-<label class="font-label-sm text-label-sm text-on-surface font-medium">Triage Priority</label>
-<div class="flex items-center gap-2 pt-1">
-<button class="flex-1 py-2 text-xs font-semibold rounded bg-surface-container text-on-surface" type="button">P3 - Routine</button>
-<button class="flex-1 py-2 text-xs font-semibold rounded bg-secondary-fixed text-on-secondary-fixed shadow-sm" type="button">P2 - Urgent</button>
-<button class="flex-1 py-2 text-xs font-semibold rounded bg-surface text-on-surface-variant" type="button">P1 - Resus</button>
-</div>
-</div>
-</form>
-<!-- Verification Status Box -->
-<div class="p-4 rounded-xl bg-surface-container-low flex items-center justify-between" id="statusPill">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
-<span class="material-symbols-outlined text-[20px]">task_alt</span>
-</div>
-<div>
-<div class="font-headline-sm text-sm font-semibold text-on-surface">Member Verification Confirmed</div>
-<div class="font-body-sm text-xs text-on-surface-variant">Benefit copay: $0.00 • Pre-authorization code granted: #SC-99824</div>
-</div>
-</div>
-<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" type="button">
-                Confirm Intake
-              </button>
-</div>
-<!-- Doctor & Nurse Collaboration Snippet -->
-<div class="flex items-center justify-between pt-2 border-t-0 text-xs text-on-surface-variant">
-<span class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[16px] text-primary">groups</span>
-                Dr. M. Chen • Nurse J. Adams on duty
-              </span>
-<span class="font-code text-xs">Latency: 18ms via TLS 1.3</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Visual Storytelling / Clinical Workflow Showcase (Image Placeholders) -->
-<section class="w-full py-20 bg-surface">
-<div class="max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop">
-<div class="text-center max-w-2xl mx-auto mb-14">
-<span class="font-label-md text-label-md text-primary font-bold uppercase tracking-wider">Unmatched Caregiver Experience</span>
-<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold mt-2 tracking-tight">Built For Doctors, Nurses, and Clinic Directors</h2>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Workflow 1 -->
-<div class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
-<div class="h-48 w-full relative overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A modern, clean hospital workstation where a doctor reviews digital patient charts on a tablet screen with high key lighting and blue clinical uniforms in the background, professional healthcare technology photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuHu7QsI01iUexeNUXpnAuMieaWA6PxIv57D-CmOAQ7FPppmr7iUzuwtN62iuc-jUOYmi6L_GWhJupxzaCx8dR-aG1rWgVY2tozn0It1rQzgBqtaAfG1dcPT01kNubR6Vj3QfMGxiAMMJXWVrmKcKrRmxo4s-gQvpnDusHNdXf0ue_IzBtvoH3TFREDltZviF_8t8k0rYATukDN7LLh618CzYQXsEnX4K6oZ1fg60IP6SeklQpemck"/>
-<div class="absolute top-3 left-3 bg-primary/90 backdrop-blur-md px-3 py-1 rounded-md text-white font-label-sm text-xs font-semibold">
-              Point-of-Care EHR
+        <nav class="landing-nav">
+            <div class="nav-links" style="display: flex; gap: 1.25rem;">
+                <a class="nav-link" href="#features">Features</a>
+                <a class="nav-link" href="#how-it-works">How It Works</a>
+                <a class="nav-link" href="#about">About</a>
             </div>
-</div>
-<div class="p-6 flex flex-col gap-2">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Bedside Charting on Any Device</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-              Clinicians update vitals and prescriptions directly at bedside, updating pharmacy records in real time without duplicated data entry.
-            </p>
-</div>
-</div>
-<!-- Workflow 2 -->
-<div class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
-<div class="h-48 w-full relative overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A brightly lit modern healthcare clinic reception desk with an administrative coordinator using a sleek desktop monitor to verify patient health insurance and booking schedule, warm and professional medical practice ambiance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpbivns86J2K9zTHnAuvge7HeBT86DPxhKXmqzxXQyzrdFv0EO99UKzpwoS54l7WqiTEkqGNsZ9imyJLbdQbkhcivTTCSq79i4HbZDPrktKtvjM2hdNNDRYno3BgjoA5Gjjb972aI8LTqU8PYG9iMtX2cGu54r6sRZaRlm31QjGmbyJAg4KvPHPl2pohcfWu04zQqaFllUlifJPSsGmbZjq7X_Oxb9zDDlhavqB6R0J2q3tIeUy5dB"/>
-<div class="absolute top-3 left-3 bg-secondary/90 backdrop-blur-md px-3 py-1 rounded-md text-white font-label-sm text-xs font-semibold">
-              Queue Management
-            </div>
-</div>
-<div class="p-6 flex flex-col gap-2">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Zero Waiting-Room Friction</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-              Keep waiting rooms calm and organized. Smart triage queues predict doctor turnaround times and automatically balance intake volumes.
-            </p>
-</div>
-</div>
-<!-- Workflow 3 -->
-<div class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
-<div class="h-48 w-full relative overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A high-tech healthcare data analytics and reporting dashboard displayed on a dual-monitor setup in a medical administrative office, visualizing patient recovery trajectories and hospital bed occupancy graphs." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSXV8M-T1yHsWPVZ3ebW31ltFf8uBfwPQ_zLA3n3-OgPiBydcOFtEN-M15mPhyGtbb4hxYCQRnyV_TyJfVL7OXFLOPt7x6gBds9ZFYL4L3THdtjxIxJVuqIbFjVyOOxBt-hYZtg2FOxgtzTNrOc9F8vyenh0pIFOkYbLfoSGc60qE6NBrIyOUQtHZoaYLV2LTMADmWHWw_HmHbDredLhrqrJoj70FlB9LSut-oNtrLeH43gNrIHX8a"/>
-<div class="absolute top-3 left-3 bg-tertiary/90 backdrop-blur-md px-3 py-1 rounded-md text-white font-label-sm text-xs font-semibold">
-              Executive Analytics
-            </div>
-</div>
-<div class="p-6 flex flex-col gap-2">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Actionable Practice Intelligence</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-              Give hospital directors live visibility into bed occupancy, specialist utilization, and daily claim settlements with one click.
-            </p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Testimonials / Care Provider Quotes (Section 5) -->
-<section class="w-full py-20 bg-surface-container-low/30">
-<div class="max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop">
-<div class="flex flex-col items-center text-center max-w-2xl mx-auto mb-14">
-<span class="font-label-md text-label-md text-secondary font-bold uppercase tracking-wider">Clinically Validated</span>
-<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold mt-2 tracking-tight">Praised by Clinical Leaders Nationwide</h2>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-<!-- Quote 1 -->
-<div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm flex flex-col justify-between relative">
-<span class="material-symbols-outlined text-surface-container text-[48px] absolute top-6 right-6">format_quote</span>
-<div class="flex flex-col gap-4 relative z-10">
-<div class="flex items-center gap-1 text-primary">
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-<p class="font-body-lg text-body-lg text-on-surface leading-relaxed italic">
-              "Transitioning our 6 multi-specialty clinics onto Smart Care reduced intake processing from 14 minutes per patient down to under 3 minutes. The medical aid switch verification alone has virtually wiped out our disputed claims backlog."
-            </p>
-</div>
-<div class="flex items-center gap-4 pt-6 mt-4 bg-surface-container-lowest">
-<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold">
-              SC
-            </div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-body-lg font-bold text-on-surface">Dr. Sarah Caine, MD</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Chief Medical Officer • MetroCare Health Group</span>
-</div>
-</div>
-</div>
-<!-- Quote 2 -->
-<div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm flex flex-col justify-between relative">
-<span class="material-symbols-outlined text-surface-container text-[48px] absolute top-6 right-6">format_quote</span>
-<div class="flex flex-col gap-4 relative z-10">
-<div class="flex items-center gap-1 text-secondary">
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-<p class="font-body-lg text-body-lg text-on-surface leading-relaxed italic">
-              "Smart Care's automated ID validation and SQL-ready patient indexing saved our administrative staff hundreds of hours every month. The security model gave our audit board total peace of mind for POPIA and HIPAA compliance."
-            </p>
-</div>
-<div class="flex items-center gap-4 pt-6 mt-4 bg-surface-container-lowest">
-<div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-on-secondary font-bold">
-              LM
-            </div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-body-lg font-bold text-on-surface">Leonard Malan</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Operations Director • Cape Coast Surgical Hospital</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Bottom High-Impact CTA Banner (Section 6) -->
-<section class="w-full py-20 bg-surface">
-<div class="max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop">
-<div class="relative rounded-3xl bg-gradient-to-r from-primary via-primary-container to-tertiary p-8 lg:p-16 overflow-hidden shadow-2xl text-on-primary">
-<!-- Decorative Ambient Rings -->
-<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-secondary-container/20 blur-2xl pointer-events-none"></div>
-<div class="absolute -left-16 -bottom-16 w-80 h-80 rounded-full bg-primary-fixed/20 blur-2xl pointer-events-none"></div>
-<div class="relative z-10 max-w-3xl flex flex-col gap-6">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-lowest/15 backdrop-blur-md self-start text-xs font-semibold">
-<span class="material-symbols-outlined text-[16px]">verified</span>
-            INSTANT 14-DAY CLINIC PILOT
-          </div>
-<h2 class="font-headline-lg text-[34px] lg:text-[46px] leading-tight font-bold tracking-tight text-white">
-            Ready to modernize your healthcare practice?
-          </h2>
-<p class="font-body-lg text-body-lg text-on-primary-container max-w-2xl">
-            Join over 500 healthcare facilities running frictionless intake, instant medical aid authorizations, and zero-error patient databases.
-          </p>
-<div class="flex flex-wrap items-center gap-4 pt-2">
-<a class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-surface-container-lowest text-primary rounded-xl font-headline-sm text-headline-sm font-semibold hover:bg-surface-container-low transition-all duration-200 shadow-lg" data-path="book-a-demo" href="#">
-<span>Get Started Free Today</span>
-<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-</a>
-<a class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-transparent text-white rounded-xl font-headline-sm text-headline-sm font-semibold hover:bg-white/10 transition-colors shadow-sm" data-path="for-clinics" href="#">
-<span class="material-symbols-outlined text-[20px]">calendar_month</span>
-<span>Schedule Clinic Walkthrough</span>
-</a>
-</div>
-<div class="flex flex-wrap items-center gap-6 pt-4 text-xs text-on-primary-container font-medium">
-<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">check</span> Enterprise data encryption</span>
-<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">check</span> 24/7 dedicated clinical support</span>
-<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">check</span> Effortless team onboarding</span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Interactive Demo Modal / Lightbox -->
-<div class="fixed inset-0 z-50 hidden bg-on-surface/60 backdrop-blur-sm flex items-center justify-center p-4" id="videoDemoModal">
-<div class="bg-surface-container-lowest rounded-2xl max-w-2xl w-full p-6 shadow-2xl flex flex-col gap-4">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-2 text-primary font-headline-sm text-headline-sm font-semibold">
-<span class="material-symbols-outlined">play_circle</span>
-          Smart Care • Clinical Walkthrough
+        </nav>
+
+        <div class="landing-header-actions">
+            <a class="btn btn-secondary" href="/login">Sign In</a>
+            <a class="btn btn-primary" href="/signup">Sign Up</a>
         </div>
-<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface" id="closeVideoDemo" type="button">
-<span class="material-symbols-outlined text-[20px]">close</span>
-</button>
-</div>
-<div class="relative w-full aspect-video bg-surface-container-high rounded-xl flex flex-col items-center justify-center text-center p-6 text-on-surface-variant">
-<span class="material-symbols-outlined text-primary text-[64px] animate-pulse">smart_display</span>
-<span class="font-headline-sm text-headline-sm text-on-surface mt-3">Interactive 2-Minute Guided Tour</span>
-<p class="font-body-sm text-body-sm max-w-md mt-1">
-          Explore patient admission, instant NHI/medical aid switch lookups, and auto-generated SQL records.
-        </p>
-<a class="mt-4 px-5 py-2.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md" data-path="book-a-demo" href="#">
-          Request Live 1-on-1 Specialist Demo
-        </a>
-</div>
-</div>
-</div>
-<script>
-    // Client-side interactions
-    (function() {
-      const openBtn = document.getElementById('openVideoDemo');
-      const closeBtn = document.getElementById('closeVideoDemo');
-      const modal = document.getElementById('videoDemoModal');
+    </header>
 
-      if (openBtn && modal && closeBtn) {
-        openBtn.addEventListener('click', () => {
-          modal.classList.remove('hidden');
-        });
-        closeBtn.addEventListener('click', () => {
-          modal.classList.add('hidden');
-        });
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) {
-            modal.classList.add('hidden');
-          }
-        });
-      }
+    <main style="flex: 1;">
 
-      // ID Validation simulator
-      const idInput = document.getElementById('idInput');
-      const idValidBadge = document.getElementById('idValidBadge');
-      if (idInput && idValidBadge) {
-        idInput.addEventListener('input', (e) => {
-          const clean = e.target.value.replace(/\s+/g, '');
-          if (clean.length >= 10) {
-            idValidBadge.classList.remove('text-outline-variant');
-            idValidBadge.classList.add('text-secondary');
-            idValidBadge.textContent = 'check_circle';
-          } else {
-            idValidBadge.classList.remove('text-secondary');
-            idValidBadge.classList.add('text-outline-variant');
-            idValidBadge.textContent = 'hourglass_empty';
-          }
+        <section class="landing-hero">
+            <span class="hero-tag">Healthcare Management System</span>
+            <h1>Patient-centered care, simplified.</h1>
+            <p class="sub">
+                SmartCare unifies patient registration, doctor management, appointment scheduling,
+                and record keeping in one secure, easy-to-use platform for clinics and practices.
+            </p>
+            <div class="landing-actions">
+                <a class="btn btn-primary" href="/book_appointment">Book Appointment</a>
+                <a class="btn btn-secondary" href="/login">Sign In</a>
+            </div>
+        </section>
+
+        <div class="landing-strip">Streamline your practice workflows</div>
+
+        <section class="landing-section" id="features">
+            <span class="form-section">
+                <span class="section-title">What SmartCare Does</span>
+            </span>
+            <h2>Everything your practice needs</h2>
+            <p class="section-lead">Four core modules, each built to keep your clinic running smoothly.</p>
+
+            <div class="feature-grid">
+                <a class="feature-card" href="/register">
+                    <span class="feature-title">Register Patients</span>
+                    <p>Capture patient demographics, SA ID numbers, contact details, and emergency contacts with validated forms.</p>
+                    <span class="feature-link">Register a Patient →</span>
+                </a>
+                <a class="feature-card" href="/doctors">
+                    <span class="feature-title">Manage Doctors</span>
+                    <p>Add, edit, and remove doctor records with their specialisations, phone numbers, and email addresses.</p>
+                    <span class="feature-link">Manage Doctors →</span>
+                </a>
+                <a class="feature-card" href="/book_appointment">
+                    <span class="feature-title">Book Appointments</span>
+                    <p>Schedule appointments by selecting a patient, doctor, date, and time with automatic status tracking.</p>
+                    <span class="feature-link">Book an Appointment →</span>
+                </a>
+                <a class="feature-card" href="/appointments">
+                    <span class="feature-title">Appointment Dashboard</span>
+                    <p>Review live metrics, today's schedule, and upcoming visits, or search through the full appointment list.</p>
+                    <span class="feature-link">View Appointments →</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="landing-section" id="how-it-works">
+            <span class="form-section">
+                <span class="section-title">Getting Started</span>
+            </span>
+            <h2>Up and running in three steps</h2>
+            <p class="section-lead">From first login to a fully scheduled clinic in minutes.</p>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <span class="step-num">Step 01</span>
+                    <h3>Create an account</h3>
+                    <p>Sign up with a username and password to access the SmartCare system securely.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">Step 02</span>
+                    <h3>Add patients and doctors</h3>
+                    <p>Register patient records and doctor information so they are ready for scheduling.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">Step 03</span>
+                    <h3>Book appointments</h3>
+                    <p>Match patients with doctors and track every visit from the dashboard.</p>
+                </div>
+            </div>
+
+            <div class="landing-actions" style="margin-top: 2rem;">
+                <a class="btn btn-primary" href="/signup">Create an Account</a>
+            </div>
+        </section>
+
+        <section class="landing-section" id="about">
+            <span class="form-section">
+                <span class="section-title">About SmartCare</span>
+            </span>
+            <h2>Built for modern healthcare administration</h2>
+            <p class="section-lead">
+                SmartCare replaces paper trails and scattered spreadsheets with a single, clean system.
+                Every module shares the same simple interface, so staff spend less time on data entry
+                and more time with patients.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card" style="cursor: default;">
+                    <span class="feature-title">Secure by design</span>
+                    <p>User passwords are hashed and all records live behind a login-protected, parameterized database.</p>
+                </div>
+                <div class="feature-card" style="cursor: default;">
+                    <span class="feature-title">Consistent experience</span>
+                    <p>A single clean interface across registration, scheduling, and reporting that is easy to learn.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="landing-footer">
+        <span class="brand">SMARTCARE</span>
+        <p>&copy; 2026 SmartCare. All rights reserved.</p>
+        <div style="display: flex; gap: 1.25rem;">
+            <a href="/login">Sign In</a>
+            <a href="/signup">Sign Up</a>
+            <a href="#features">Features</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var links = document.querySelectorAll('.nav-link[href^="#"]');
+            links.forEach(function (link) {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    var target = document.querySelector(link.getAttribute("href"));
+                    if (target) {
+                        target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                });
+            });
         });
-      }
-    })();
-  </script>
-</div></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.02)] pt-2xl pb-xl"><div class="max-w-max-width mx-auto px-margin-mobile lg:px-margin-desktop"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-xl pb-2xl"><div class="lg:col-span-2 flex flex-col gap-md"><div class="flex items-center gap-sm text-primary"><span class="material-symbols-outlined text-[26px]">health_and_safety</span><span class="font-headline-sm text-headline-sm tracking-tight text-primary">Smart Care</span></div><p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">A clinical-grade, modern healthcare operating platform engineered for precision care workflows, secure telehealth operations, and unified patient records.</p><div class="flex items-center gap-sm pt-xs"><span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-low text-secondary rounded-lg font-label-sm text-label-sm font-semibold"><span class="material-symbols-outlined text-[14px]">verified_user</span>HIPAA Compliant</span><span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-low text-secondary rounded-lg font-label-sm text-label-sm font-semibold"><span class="material-symbols-outlined text-[14px]">security</span>ISO 27001 Certified</span><span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-low text-secondary rounded-lg font-label-sm text-label-sm font-semibold"><span class="material-symbols-outlined text-[14px]">lock</span>SOC2 Type II</span></div></div><div><h4 class="font-headline-sm text-body-lg text-on-surface mb-md">Product</h4><ul class="flex flex-col gap-sm"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="features" href="#">Core EHR Suite</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="features" href="#">Telehealth Hub</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="features" href="#">Automated Scheduling</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="features" href="#">Clinical Analytics</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="security" href="#">Security &amp; Encryption</a></li></ul></div><div><h4 class="font-headline-sm text-body-lg text-on-surface mb-md">Clinics &amp; Teams</h4><ul class="flex flex-col gap-sm"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="for-clinics" href="#">Independent Practices</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="for-clinics" href="#">Regional Hospitals</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="solutions" href="#">Multi-specialty Clinics</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="book-a-demo" href="#">Request Clinical Pilot</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="solutions" href="#">Enterprise Integrations</a></li></ul></div><div><h4 class="font-headline-sm text-body-lg text-on-surface mb-md">Trust &amp; Legal</h4><ul class="flex flex-col gap-sm"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="security" href="#">Trust Center</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="security" href="#">Privacy Policy</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="security" href="#">Terms of Service</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="about-us" href="#">Clinical Advisory Board</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="about-us" href="#">Contact Support</a></li></ul></div></div><div class="flex flex-col sm:flex-row items-center justify-between gap-md pt-lg bg-surface-container-lowest text-on-surface-variant"><p class="font-body-sm text-body-sm">© 2025 Smart Care Health Technologies Inc. All rights reserved.</p><div class="flex items-center gap-md text-on-surface-variant font-body-sm text-body-sm"><a class="hover:text-on-surface transition-colors" data-path="security" href="#">Compliance</a><span>•</span><a class="hover:text-on-surface transition-colors" data-path="security" href="#">Security Whitepaper</a><span>•</span><a class="hover:text-on-surface transition-colors" data-path="about-us" href="#">Status</a></div></div></div></footer></body></html>
+    </script>
+</body>
+</html>
