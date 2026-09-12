@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Booking Confirmed</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container" style="max-width: 680px; text-align: center;">
+        <div class="success-mark">✓</div>
+        <h2>Appointment Booked</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.75rem;">
+            The appointment has been scheduled and marked as <span class="status-badge status-confirmed">Confirmed</span>.
+        </p>
+
+        <div class="confirmation-card">
+            <div class="summary-row"><span>Patient</span><strong>{{ confirmation.number }}</strong></div>
+            <div class="summary-row"><span>Doctor</span><strong>ID {{ confirmation.doctor }}</strong></div>
+            <div class="summary-row"><span>Date</span><strong>{{ confirmation.date }}</strong></div>
+            <div class="summary-row"><span>Time</span><strong>{{ confirmation.time }}</strong></div>
+            <div class="summary-row"><span>Status</span><span class="status-badge status-confirmed">{{ confirmation.status }}</span></div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.75rem;">
+            <a href="/dashboard" class="btn btn-primary" style="width: auto;">Back to Dashboard</a>
+            <a href="/calendar" class="btn btn-secondary" style="width: auto;">View Calendar</a>
+        </div>
+    </div>
+
+</body>
+</html>

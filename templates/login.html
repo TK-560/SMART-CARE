@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartCare - Login</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+<body class="auth-page">
     <header class="header">
-        <div class="brand">SMARTCARE</div>
+        <a class="brand" href="/" style="text-decoration: none; color: var(--text-main);">SMARTCARE</a>
         <div class="user-badge">System Access</div>
     </header>
 
@@ -16,12 +17,21 @@
             <div class="split-left">
                 <div>
                     <span style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted);">HEALTHCARE MANAGEMENT SYSTEM</span>
-                    <h1 style="font-size: 2rem; margin-top: 1rem; line-height: 1.2;">Patient-centered care, simplified.</h1>
+                    <h1 style="font-size: 2rem; margin-top: 1rem; line-height: 1.2;">Welcome back to SmartCare.</h1>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; line-height: 1.6;">
+                        Secure sign-in keeps patient records private. Use your staff account to manage
+                        appointments, registrations, and clinic workflows.
+                    </p>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Manage appointments, patient records, and clinical workflows from a single unified platform.</p>
+                <div class="auth-points">
+                    <div class="auth-point"><span class="auth-dot"></span> Encrypted staff credentials</div>
+                    <div class="auth-point"><span class="auth-dot"></span> Remember me for quicker access</div>
+                    <div class="auth-point"><span class="auth-dot"></span> Self-service password reset</div>
+                </div>
             </div>
 
             <div class="split-right">
+                <span class="auth-kicker">Sign In</span>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Enter your credentials to access the system.</p>
 
                 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -33,14 +43,30 @@
                 <form action="/login" method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;" onsubmit="return validateLogin()">
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="e.g. Admin Rea" required>
+                        <input type="text" id="username" name="username" placeholder="e.g. Admin Rea" value="{{ remember_username }}" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="••••••••••••" required>
+                        <div class="password-wrap">
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle" id="togglePassword" aria-label="Show or hide password" tabindex="-1">
+                                <span class="eye-icon" id="eyeIcon">👁</span>
+                            </button>
+                        </div>
+                        <span class="field-hint" id="pwd_hint"></span>
                     </div>
+
+                    <div class="form-row-between">
+                        <label class="checkbox-label" for="remember">
+                            <input type="checkbox" id="remember" name="remember" value="1" {% if remember_username %}checked{% endif %}>
+                            <span>Remember Me</span>
+                        </label>
+                        <a href="/forgot_password" class="link-text" style="font-size: 0.8rem;">Forgot password?</a>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Sign In</button>
                 </form>
+
                 <p style="margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
                     New user? <a href="/signup" style="color: var(--black); font-weight: 600;">Create an account</a>
                 </p>
@@ -52,13 +78,34 @@
         function validateLogin() {
             var username = document.getElementById("username").value.trim();
             var password = document.getElementById("password").value;
+            var hint = document.getElementById("pwd_hint");
 
-            if (!username || !password) {
-                alert("Please enter both username and password.");
+            if (!username) {
+                setFieldHint("pwd_hint", "");
+                return true;
+            }
+            if (!password) {
+                setFieldHint("pwd_hint", "Please enter your password.");
+                document.getElementById("password").focus();
                 return false;
             }
+            setFieldHint("pwd_hint", "");
             return true;
         }
+
+        function setFieldHint(id, text) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = text;
+        }
+
+        var toggle = document.getElementById("togglePassword");
+        var passwordInput = document.getElementById("password");
+        var eyeIcon = document.getElementById("eyeIcon");
+        toggle.addEventListener("click", function () {
+            var show = passwordInput.type === "password";
+            passwordInput.type = show ? "text" : "password";
+            eyeIcon.textContent = show ? "🙈" : "👁";
+        });
     </script>
 </body>
 </html>

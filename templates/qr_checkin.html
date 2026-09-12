@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - QR Check-in</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container" style="max-width: 1050px;">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">QR Check-in</span>
+        </div>
+
+        <div class="step-header">
+            <h2>QR Code Check-in</h2>
+            <span class="required-label">{{ checked_count }} checked in</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+            Patients scan their unique code on arrival. Staff tap <strong>Check In</strong> and the
+            dashboard updates instantly — no queue at reception.
+        </p>
+
+        {% if items %}
+        <div class="checkin-grid">
+            {% for it in items %}
+            <div class="checkin-card {{ 'checked-in' if it.checked }}">
+                <div class="qr-box">
+                    {% if it.checked %}
+                    <div class="qr-checked-mark">✓</div>
+                    {% endif %}
+                    <svg viewBox="0 0 {{ it.qr_size }} {{ it.qr_size }}" width="132" height="132" shape-rendering="crispEdges" class="qr-svg">
+                        {% for cell in it.qr %}
+                            {% if cell %}
+                            <rect x="{{ loop.index0 % it.qr_size }}" y="{{ (loop.index0 / it.qr_size) | int }}" width="1" height="1" fill="#000"></rect>
+                            {% endif %}
+                        {% endfor %}
+                    </svg>
+                </div>
+                <div class="checkin-info">
+                    <strong>{{ it.patient }}</strong>
+                    <span class="checkin-meta">{{ it.time }} · {{ it.doctor }}</span>
+                    <span class="status-badge">{{ it.status }}</span>
+                </div>
+                <form method="POST" style="margin-top: 0.75rem;">
+                    <input type="hidden" name="target" value="{{ it.number }}">
+                    {% if it.checked %}
+                    <button type="submit" class="btn btn-secondary" style="width: 100%;">Undo Check-in</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Check In</button>
+                    {% endif %}
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="color: var(--text-muted); font-size: 0.9rem;">No upcoming appointments to check in.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

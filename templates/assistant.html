@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - AI Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container" style="max-width: 860px;">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">AI Assistant</span>
+        </div>
+
+        <div class="step-header">
+            <h2>SmartCare Assistant</h2>
+            <span class="status-badge status-online">● Online</span>
+        </div>
+
+        <div class="chat-window">
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-msg bot">
+                    <p>Hi {{ session.get('user') }}! I'm Smartie, the SmartCare assistant. Ask me about
+                    appointments, patients, doctors, or clinic operations.</p>
+                </div>
+            </div>
+
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button type="button" class="chip" data-q="How do I book an appointment?">Book an appointment</button>
+                <button type="button" class="chip" data-q="What are the clinic hours?">Clinic hours</button>
+                <button type="button" class="chip" data-q="How do I check in a patient?">QR check-in</button>
+                <button type="button" class="chip" data-q="How do reminders work?">SMS reminders</button>
+            </div>
+
+            <form id="chatForm" class="chat-input-row">
+                <input type="text" id="chatInput" placeholder="Type your question..." autocomplete="off">
+                <button type="submit" class="btn btn-primary" style="width: auto;">Send</button>
+            </form>
+        </div>
+
+        <div class="assistant-card-grid">
+            <div class="feature-card" style="cursor: default;">
+                <span class="feature-title">Faster staff onboarding</span>
+                <p>New reception staff get instant answers instead of hunting through manuals.</p>
+            </div>
+            <div class="feature-card" style="cursor: default;">
+                <span class="feature-title">Less admin overhead</span>
+                <p>Common tasks — booking, reminders, checking in — are explained in one tap.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var messagesEl = document.getElementById("chatMessages");
+
+        var answers = {
+            "appointment": "To book an appointment go to the <b>Appointment</b> page, pick a patient, doctor, date and time, then confirm. The booking is saved with a <b>Confirmed</b> status.",
+            "book": "To book an appointment go to the <b>Appointment</b> page, pick a patient, doctor, date and time, then confirm. The booking is saved with a <b>Confirmed</b> status.",
+            "clinic": "SmartCare clinic hours are <b>Mon – Fri: 08:00 – 17:00</b> and <b>Sat: 08:00 – 12:00</b>. Sundays and public holidays are closed.",
+            "hour": "SmartCare clinic hours are <b>Mon – Fri: 08:00 – 17:00</b> and <b>Sat: 08:00 – 12:00</b>. Sundays and public holidays are closed.",
+            "check": "On the <b>QR Check-in</b> page each upcoming appointment shows a unique <b>QR code</b>. The patient scans it, staff confirm, and the status flips to <b>Checked In</b>.",
+            "qr": "On the <b>QR Check-in</b> page each upcoming appointment shows a unique <b>QR code</b>. The patient scans it, staff confirm, and the status flips to <b>Checked In</b>.",
+            "reminder": "The <b>SMS Reminders</b> page lists appointments in the next 7 days. One tap sends a reminder text to each patient's mobile number, cutting no-shows.",
+            "sms": "The <b>SMS Reminders</b> page lists appointments in the next 7 days. One tap sends a reminder text to each patient's mobile number, cutting no-shows.",
+            "patient": "Use the <b>Patient Portal</b> to search any patient, open their <b>Medical History</b>, book a follow-up, or start a QR check-in.",
+            "report": "Open <b>Reports</b> to see appointments by specialisation, status, gender, and a rolling 7-day overview.",
+            "doctor": "SmartCare keeps a register of our doctors with their specialisations — open <b>Dashboard</b> to see totals or <b>Reports</b> for case volumes.",
+            "default": "I can help with appointments, patients, clinic hours, QR check-in, SMS reminders, and reports. Try a suggested question below!",
+        };
+
+        function addMessage(text, who) {
+            var div = document.createElement("div");
+            div.className = "chat-msg " + who;
+            var p = document.createElement("p");
+            p.innerHTML = text;
+            div.appendChild(p);
+            messagesEl.appendChild(div);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            return div;
+        }
+
+        function getAnswer(question) {
+            var q = question.toLowerCase();
+            for (var key in answers) {
+                if (q.indexOf(key) !== -1) return answers[key];
+            }
+            return answers["default"];
+        }
+
+        function ask(question) {
+            addMessage(question, "user");
+            var typing = addMessage("<i>Smartie is typing…</i>", "bot");
+            setTimeout(function () {
+                typing.parentNode.removeChild(typing);
+                addMessage(getAnswer(question), "bot");
+            }, 700 + Math.random() * 600);
+        }
+
+        document.getElementById("chatForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            var input = document.getElementById("chatInput");
+            var q = input.value.trim();
+            if (!q) return;
+            input.value = "";
+            ask(q);
+        });
+
+        document.querySelectorAll(".chip").forEach(function (chip) {
+            chip.addEventListener("click", function () {
+                ask(chip.dataset.q);
+            });
+        });
+    </script>
+</body>
+</html>

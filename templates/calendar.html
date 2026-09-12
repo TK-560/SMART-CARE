@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Appointment Calendar</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container" style="max-width: 1080px;">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">Calendar</span>
+        </div>
+
+        <div class="step-header">
+            <h2>Appointment Calendar</h2>
+            <a href="/book_appointment" class="btn btn-primary" style="width: auto;">New Appointment</a>
+        </div>
+
+        <div class="calendar-layout">
+            <div class="calendar-widget static">
+                <div class="calendar-head">
+                    <span class="cal-title">{{ month_year }}</span>
+                </div>
+                <div class="calendar-grid month-view" id="monthGrid">
+                    <span class="cal-day-head">Sun</span>
+                    <span class="cal-day-head">Mon</span>
+                    <span class="cal-day-head">Tue</span>
+                    <span class="cal-day-head">Wed</span>
+                    <span class="cal-day-head">Thu</span>
+                    <span class="cal-day-head">Fri</span>
+                    <span class="cal-day-head">Sat</span>
+                    {% for _ in range(weekday_offset) %}
+                    <span class="cal-day empty"></span>
+                    {% endfor %}
+                    {% for day in range(1, days_in_month + 1) %}
+                        {% set key = ("%04d-%02d-%02d" | format(year, month_num, day)) %}
+                        {% set events = month_events.get(key, []) %}
+                        <span class="cal-day {{ 'today' if key == today else '' }} {{ 'has-events' if events else '' }}"
+                              data-date="{{ key }}" data-count="{{ events|length }}">
+                            {{ day }}{% if events %}<i class="cal-dots">{{ events|length }}</i>{% endif %}
+                        </span>
+                    {% endfor %}
+                </div>
+                <div class="calendar-legend">
+                    <span><i class="lg-dot today-dot"></i> Today</span>
+                    <span><i class="lg-dot event-dot"></i> Has appointment(s)</span>
+                </div>
+            </div>
+
+            <div class="day-schedule">
+                <span class="section-title">Day Schedule</span>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.75rem;">
+                    Pick a highlighted day to see its appointments.
+                </p>
+                <div id="dayEvents">
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">Select a date on the month grid.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var eventsByDate = {
+            {% for date, evts in month_events.items() %}"{{ date }}": [
+                {% for e in evts %}{ "time": "{{ e.time }}", "patient": "{{ e.patient }}", "doctor": "{{ e.doctor }}", "status": "{{ e.status }}" },{% endfor %}
+            ],{% endfor %}
+        };
+
+        function pad(n) { return String(n).padStart(2, "0"); }
+        function renderEvents(dateKey) {
+            var box = document.getElementById("dayEvents");
+            var events = eventsByDate[dateKey] || [];
+            if (!events.length) {
+                box.innerHTML = "<p style='color: var(--text-muted); font-size: 0.85rem;'>No appointments on " + dateKey + ".</p>";
+                return;
+            }
+            var html = "<table class='data-table'><thead><tr><th>Time</th><th>Patient</th><th>Doctor</th><th>Status</th></tr></thead><tbody>";
+            events.forEach(function (e) {
+                html += "<tr><td>" + e.time + "</td><td>" + e.patient + "</td><td>" + e.doctor +
+                        "</td><td><span class='status-badge'>" + e.status + "</span></td></tr>";
+            });
+            html += "</tbody></table>";
+            box.innerHTML = html;
+        }
+
+        document.getElementById("monthGrid").addEventListener("click", function (e) {
+            var cell = e.target.closest(".cal-day");
+            if (!cell || cell.classList.contains("empty") || cell.classList.contains("cal-day-head")) return;
+            document.querySelectorAll("#monthGrid .cal-day").forEach(function (c) {
+                c.classList.remove("selected");
+            });
+            cell.classList.add("selected");
+            renderEvents(cell.dataset.date);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Innovation Features</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container" style="max-width: 1080px;">
+        <div class="step-header">
+            <h2>Innovation Features</h2>
+            <span class="required-label">Prototype overview · how each feature improves UX</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" class="section-lead">
+            Seven additions shown in the prototype. Each one is built to remove a specific friction
+            point found in the current SmartCare workflow.
+        </p>
+
+        <div class="innovation-grid">
+            <a class="innovation-card" href="/patient_portal">
+                <span class="inn-icon">☰</span>
+                <span class="inn-title">Patient Portal</span>
+                <p class="inn-benefit"><b>UX gain:</b> one search point for every patient record.</p>
+                <p class="inn-desc">Lets staff find a patient by number, name, or phone and jump straight to
+                    history, booking, or check-in — no more digging through paper files.</p>
+                <span class="inn-link">Open Patient Portal →</span>
+            </a>
+
+            <a class="innovation-card" href="/sms_reminders">
+                <span class="inn-icon">✉</span>
+                <span class="inn-title">SMS Reminders</span>
+                <p class="inn-benefit"><b>UX gain:</b> fewer no-shows, less re-scheduling.</p>
+                <p class="inn-desc">Upcoming appointments are listed with patient mobiles and a one-tap send.
+                    Patients get a text 24 hours before, so empty slots shrink and diaries stay full.</p>
+                <span class="inn-link">Open SMS Reminders →</span>
+            </a>
+
+            <a class="innovation-card" href="/calendar">
+                <span class="inn-icon">☐</span>
+                <span class="inn-title">Appointment Calendar</span>
+                <p class="inn-benefit"><b>UX gain:</b> the day's load at a glance.</p>
+                <p class="inn-desc">A month grid shows which days are busy. Selecting a day reveals its exact
+                    schedule, making capacity planning and rescheduling intuitive.</p>
+                <span class="inn-link">Open Calendar →</span>
+            </a>
+
+            <a class="innovation-card" href="/reports">
+                <span class="inn-icon">⌁</span>
+                <span class="inn-title">Reports Dashboard</span>
+                <p class="inn-benefit"><b>UX gain:</b> decisions backed by data.</p>
+                <p class="inn-desc">Visual charts of appointments by specialisation, status, gender, and recent
+                    daily volume give managers insight without exporting spreadsheets.</p>
+                <span class="inn-link">Open Reports →</span>
+            </a>
+
+            <a class="innovation-card" href="/assistant">
+                <span class="inn-icon">◒</span>
+                <span class="inn-title">AI Chat Assistant</span>
+                <p class="inn-benefit"><b>UX gain:</b> answers on demand for new staff.</p>
+                <p class="inn-desc">A scripted assistant answers common questions about booking, check-in,
+                    reminders, and hours, cutting training time and repeated questions to human staff.</p>
+                <span class="inn-link">Open AI Assistant →</span>
+            </a>
+
+            <a class="innovation-card" href="/qr_checkin">
+                <span class="inn-icon">▦</span>
+                <span class="inn-title">QR Code Check-in</span>
+                <p class="inn-benefit"><b>UX gain:</b> zero-queue arrivals.</p>
+                <p class="inn-desc">Each appointment gets a unique scannable code. Patients scan on arrival and
+                    staff confirm in one tap, so reception clears instantly and doctors stay on schedule.</p>
+                <span class="inn-link">Open QR Check-in →</span>
+            </a>
+
+            <a class="innovation-card" href="/patient_portal">
+                <span class="inn-icon">◷</span>
+                <span class="inn-title">Medical History Screen</span>
+                <p class="inn-benefit"><b>UX gain:</b> context before the consultation.</p>
+                <p class="inn-desc">A timeline of past visits, doctors, outcomes, allergies, and chronic
+                    conditions means clinicians walk in prepared and patients don't repeat their story.</p>
+                <span class="inn-link">View an example history →</span>
+            </a>
+        </div>
+
+        <div class="report-note" style="margin-top: 1.5rem;">
+            <span class="section-title">How the login, registration, booking and dashboard improved too</span>
+            <p>• <b>Login:</b> password visibility toggle, Remember Me, and self-service forgot-password flow.
+            • <b>Registration:</b> sections, in-field validation messages, and a stepper that guides the user.
+            • <b>Booking:</b> visual doctor cards, a pickable calendar and time-slot pills, plus a live summary
+            that shows the <b>Confirmed</b> status before submitting.
+            • <b>Dashboard:</b> quick actions for every routine task and a notification panel that flags what
+            needs attention today.</p>
+        </div>
+    </div>
+
+</body>
+</html>

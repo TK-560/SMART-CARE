@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - SMS Reminders</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container" style="max-width: 1000px;">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">SMS Reminders</span>
+        </div>
+
+        <div class="step-header">
+            <h2>SMS Appointment Reminders</h2>
+            <form method="POST" style="display: flex; gap: 0.5rem;">
+                <input type="hidden" name="action" value="send_all">
+                <button type="submit" class="btn btn-primary" style="width: auto;">Send Reminders to All</button>
+            </form>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+            Reduce missed appointments by automatically texting patients 24 hours before their visit.
+        </p>
+
+        <div class="metrics-grid reminder-stats">
+            <div class="metric-card">
+                <span class="metric-title">Upcoming (7 days)</span>
+                <div class="metric-value">{{ total }}</div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-title">Reminders Sent</span>
+                <div class="metric-value">{{ sent_count }}</div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-title">Awaiting Send</span>
+                <div class="metric-value">{{ total - sent_count }}</div>
+            </div>
+        </div>
+
+        {% if reminders %}
+        <div class="table-section">
+            <table class="data-table" id="sms_table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Patient</th>
+                        <th>Mobile</th>
+                        <th>Doctor</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rem in reminders %}
+                    <tr class="{{ 'row-sent' if rem.sent }}">
+                        <td>{{ rem.date }}</td>
+                        <td>{{ rem.time }}</td>
+                        <td>{{ rem.patient }}</td>
+                        <td>{{ rem.contact }}</td>
+                        <td>{{ rem.doctor }}</td>
+                        <td><span class="status-badge">{{ rem.status }}</span></td>
+                        <td>
+                            {% if rem.sent %}
+                            <span class="sms-sent-tag">✓ Sent</span>
+                            {% else %}
+                            <form method="POST" style="display: inline;">
+                                <input type="hidden" name="action" value="send">
+                                <input type="hidden" name="target" value="{{ rem.number }}">
+                                <button type="submit" class="btn btn-secondary" style="width: auto; padding: 0.35rem 0.9rem; font-size: 0.7rem;">Send SMS</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p style="color: var(--text-muted); font-size: 0.9rem;">No appointments in the next 7 days.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

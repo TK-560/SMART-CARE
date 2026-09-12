@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Medical History</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container" style="max-width: 1000px;">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <a href="/patient_portal" class="crumb">Patient Portal</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">Medical History</span>
+        </div>
+
+        <div class="patient-banner">
+            <div class="patient-avatar">{{ patient[2][0] }}{{ patient[1][0] }}</div>
+            <div>
+                <h2>{{ patient[2] }}, {{ patient[1] }}</h2>
+                <p class="patient-meta">
+                    Patient #{{ patient[0] }} · DOB {{ patient[3] }} · Gender {{ patient[4] }}
+                    · {{ patient[5] }} · {{ patient[6] or "no email" }}
+                </p>
+            </div>
+            <a href="/qr_checkin" class="btn btn-secondary" style="width: auto; margin-left: auto;">QR Check-in</a>
+        </div>
+
+        <div class="health-flags">
+            <div class="flag-card warning">
+                <span class="flag-title">Allergies</span>
+                <p>{{ allergies }}</p>
+            </div>
+            <div class="flag-card info">
+                <span class="flag-title">Chronic Conditions</span>
+                <p>{{ conditions }}</p>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <span class="section-title">Visit Timeline</span>
+            {% if history %}
+            <div class="timeline">
+                {% for h in history %}
+                <div class="timeline-item">
+                    <span class="timeline-date">{{ h[0] }} · {{ h[1] }}</span>
+                    <div class="timeline-body">
+                        <strong>{{ h[2] }}</strong>
+                        <span class="status-badge">{{ h[3] }}</span>
+                        <p>{{ h[4] or "No notes recorded." }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p style="color: var(--text-muted); font-size: 0.9rem;">No past visits recorded for this patient.</p>
+            {% endif %}
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <a href="/book_appointment" class="btn btn-primary" style="width: auto;">Book Follow-up</a>
+            <a href="/patient_portal" class="btn btn-secondary" style="width: auto;">Back to Portal</a>
+        </div>
+    </div>
+
+</body>
+</html>

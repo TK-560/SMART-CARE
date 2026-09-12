@@ -1,7 +1,10 @@
-"""Unit tests for the SmartCare Flask application.
+"""Unit tests for the SmartCare application including the Section B
+prototype features.
 
-The database connection is mocked out (unittest.mock) so these tests run
-without touching the live SQL Server database.
+These tests mock the database layer (``app.get_connection``), so they run
+without a live SQL Server connection. When the connection returns ``None``
+the prototype routes fall back to their demo data, which is exactly what the
+tests verify here.
 """
 import datetime
 
@@ -12,6 +15,10 @@ import app as app_module
 
 PASSWORD_HASH = generate_password_hash("pass123")
 VALID_USER = (1, "Admin Rea", PASSWORD_HASH)
+
+AUTH_ROUTES = ["/dashboard", "/register", "/book_appointment", "/appointments"]
+PROTOTYPE_ROUTES = ["/patient_portal", "/sms_reminders", "/calendar",
+                    "/reports", "/qr_checkin", "/assistant", "/booking_success"]
 
 
 class FakeCursor:
@@ -60,14 +67,20 @@ def make_conn(cursor):
 
 @pytest.fixture
 def client(monkeypatch):
-    def fake_get_connection():
-        return None
-
-    monkeypatch.setattr(app_module, "get_connection", fake_get_connection)
+    app_module.app.config.update(TESTING=True)
+    monkeypatch.setattr(app_module, "get_connection", lambda: None)
     return app_module.app.test_client()
 
 
-# --- Page availability -----------------------------------------------
+def login(client, username="admin", password="pass123", remember="1"):
+    return client.post("/login", data={
+        "username": username,
+        "password": password,
+        "remember": remember,
+    })
+
+
+# --- Public pages ------------------------------------------------------
 
 
 def test_index_loads(client):
@@ -75,23 +88,36 @@ def test_index_loads(client):
 
 
 def test_login_page_loads(client):
-    assert client.get("/login").status_code == 200
+    resp = client.get("/login")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "Forgot password?" in body
+    assert "Remember Me" in body
+    assert "togglePassword" in body
 
 
 def test_signup_page_loads(client):
-    assert client.get("/signup").status_code == 200
+    resp = client.get("/signup")
+    assert resp.status_code == 200
 
 
-# --- Authentication guards -------------------------------------------
+def test_forgot_password_page_loads(client):
+    resp = client.get("/forgot_password")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "Forgot Password" in body
+    assert "email" in body
 
 
-@pytest.mark.parametrize("url", [
-    "/dashboard", "/register", "/book_appointment", "/appointments",
-])
-def test_protected_routes_redirect_when_logged_out(client, url):
-    resp = client.get(url)
-    assert resp.status_code == 302
-    assert resp.headers["Location"].endswith("/login")
+def test_innovations_page_loads(client):
+    resp = client.get("/innovations")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "UX gain" in body
+    assert "Patient Portal" in body
+
+
+# --- Authentication guards --------------------------------------------
 
 
 def test_register_redirects_when_logged_out(client):
@@ -100,19 +126,43 @@ def test_register_redirects_when_logged_out(client):
     assert resp.headers["Location"].endswith("/login")
 
 
-# --- Login logic ------------------------------------------------------
+@pytest.mark.parametrize("route", AUTH_ROUTES + PROTOTYPE_ROUTES)
+def test_protected_routes_redirect_when_logged_out(client, route):
+    resp = client.get(route)
+    assert resp.status_code == 302
+    assert resp.headers["Location"].endswith("/login")
 
 
-def test_login_success_sets_session(client, monkeypatch):
-    cursor = FakeCursor(fetchone_result=VALID_USER)
-    monkeypatch.setattr(app_module, "get_connection",
-                        lambda: make_conn(cursor))
-    resp = client.post("/login", data={
-        "username": "Admin Rea", "password": "pass123"})
+# --- Login logic -------------------------------------------------------
+
+
+def test_login_success_sets_session_and_remember_cookie(monkeypatch, client):
+    class FakeCursor:
+        def __init__(self):
+            self.result = (1, "admin",
+                           generate_password_hash("pass123", method="scrypt"))
+
+        def execute(self, *args):
+            return None
+
+        def fetchone(self):
+            return self.result
+
+    class FakeConnection:
+        def cursor(self):
+            return FakeCursor()
+
+        def close(self):
+            return None
+
+    monkeypatch.setattr(app_module, "get_connection", lambda: FakeConnection())
+
+    resp = login(client)
     assert resp.status_code == 302
     assert resp.headers["Location"].endswith("/dashboard")
     with client.session_transaction() as sess:
-        assert sess.get("user") == "Admin Rea"
+        assert sess.get("user") == "admin"
+    assert "smartcare_username=admin" in resp.headers.get("Set-Cookie", "")
 
 
 def test_login_wrong_password_shows_error(client, monkeypatch):
@@ -135,6 +185,11 @@ def test_login_unknown_user_shows_error(client, monkeypatch):
     assert "Invalid username or password." in resp.get_data(as_text=True)
 
 
+def test_login_missing_username_field_does_not_crash(client):
+    resp = client.post("/login", data={"password": "pass123"})
+    assert resp.status_code == 200
+
+
 # --- Password hashing logic -------------------------------------------
 
 
@@ -146,7 +201,7 @@ def test_password_hash_round_trip():
     assert not check_password_hash(hashed, "nope")
 
 
-# --- Signup logic -----------------------------------------------------
+# --- Signup logic ------------------------------------------------------
 
 
 def test_signup_password_mismatch(client):
@@ -169,10 +224,6 @@ def test_signup_duplicate_username_blocked(client, monkeypatch):
     assert inserts == []  # duplicate was rejected before inserting
 
 
-@pytest.mark.xfail(
-    reason="Bug: signup.html has no flash-message block, so the "
-           "'That username is already taken.' message is never shown "
-           "to the user. Fix recommended in maintenance.")
 def test_signup_duplicate_shows_error_message(client, monkeypatch):
     cursor = FakeCursor(fetchone_result=(2, "Taken", "hash"))
     monkeypatch.setattr(app_module, "get_connection",
@@ -257,7 +308,7 @@ def test_book_appointment_insert(client, monkeypatch):
         "notes": "Follow-up",
     })
     assert resp.status_code == 302
-    assert resp.headers["Location"].endswith("/dashboard")
+    assert resp.headers["Location"].endswith("/booking_success")
     inserts = [(sql, p) for sql, p in cursor.executed
                if "INSERT INTO Appointments" in sql]
     assert len(inserts) == 1
@@ -294,6 +345,18 @@ def test_dashboard_shows_upcoming_appointments(client, monkeypatch):
     assert "Dr Sarah Smith" in resp.get_data(as_text=True)
 
 
+def test_dashboard_has_quick_actions_and_notifications(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    resp = client.get("/dashboard")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "Total Patients" in body
+    assert "Total Doctors" in body
+    assert "Quick Actions" in body
+    assert "Notifications" in body
+
+
 # --- All appointments -------------------------------------------------
 
 
@@ -312,19 +375,98 @@ def test_all_appointments_lists_records(client, monkeypatch):
     assert "Follow-up" in body
 
 
-# --- Known bugs (documented, fix recommended) -------------------------
+# --- Section B prototype pages ----------------------------------------
 
 
-@pytest.mark.xfail(
-    reason="Known bug: login crashes with AttributeError when the "
-           "username field is omitted because .strip() is called on None. "
-           "Fix recommended in maintenance.")
-def test_login_missing_username_field_crashes(client):
-    resp = client.post("/login", data={"password": "pass123"})
+def test_register_page_has_inline_validation(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    body = client.get("/register").get_data(as_text=True)
+    assert "stepper" in body
+    assert "field-hint" in body
+    assert "Patient number must be exactly 8 digits" in body
+
+
+def test_booking_page_has_calendar_doctor_cards_and_status(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    body = client.get("/book_appointment").get_data(as_text=True)
+    assert "doctor-card" in body
+    assert "calendar-widget" in body
+    assert "time-slot" in body
+    assert "status-confirmed" in body
+
+
+def test_patient_portal_lists_patients(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    resp = client.get("/patient_portal")
+    body = resp.get_data(as_text=True)
     assert resp.status_code == 200
+    assert "Patient Portal" in body
+    assert "History" in body
 
 
-# --- Doctor management --------------------------------------------------
+def test_medical_history_page_renders(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    resp = client.get("/history/90000125")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "Medical History" in body
+    assert "timeline" in body
+
+
+def test_sms_reminders_page_renders(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    resp = client.get("/sms_reminders")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "SMS" in body
+    assert "Send SMS" in body or "Reminders Sent" in body
+
+
+def test_calendar_page_renders(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    resp = client.get("/calendar")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "Appointment Calendar" in body
+    assert "monthGrid" in body or "calendar-grid" in body
+
+
+def test_reports_page_renders(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    resp = client.get("/reports")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "Reports" in body
+    assert "bar-fill" in body
+
+
+def test_qr_checkin_page_renders(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    resp = client.get("/qr_checkin")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "QR" in body
+    assert "svg" in body
+
+
+def test_assistant_page_renders(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "admin"
+    resp = client.get("/assistant")
+    body = resp.get_data(as_text=True)
+    assert resp.status_code == 200
+    assert "Smartie" in body
+
+
+# --- Doctor management -------------------------------------------------
 
 
 @pytest.mark.parametrize("url", [

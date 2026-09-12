@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Reports</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include '_nav_panel.html' %}
+
+    <div class="main-container" style="max-width: 1080px;">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">Reports</span>
+        </div>
+
+        <div class="step-header">
+            <h2>Reports &amp; Analytics</h2>
+            <div style="display: flex; gap: 0.75rem;">
+                <a href="/appointments" class="btn btn-secondary" style="width: auto;">All Appointments</a>
+                <a href="/dashboard" class="btn btn-primary" style="width: auto;">Dashboard</a>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <span class="section-title">Appointments by Specialisation</span>
+                <div class="bar-chart">
+                    {% for spec, count in data.by_spec %}
+                    <div class="bar-row">
+                        <span class="bar-label">{{ spec }}</span>
+                        <span class="bar-track"><span class="bar-fill" style="width: {{ (count / spec_total * 100) | round }}%;"></span></span>
+                        <span class="bar-value">{{ count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <span class="section-title">Appointments by Status</span>
+                <div class="bar-chart">
+                    {% for status, count in data.by_status %}
+                    <div class="bar-row">
+                        <span class="bar-label">{{ status }}</span>
+                        <span class="bar-track"><span class="bar-fill" style="width: {{ (count / spec_total * 100) | round }}%;"></span></span>
+                        <span class="bar-value">{{ count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <span class="section-title">Patients by Gender</span>
+                <div class="bar-chart">
+                    {% for gender, count in data.by_gender %}
+                    <div class="bar-row">
+                        <span class="bar-label">{{ gender }}</span>
+                        <span class="bar-track"><span class="bar-fill" style="width: {{ (count / (spec_total) * 100) | round }}%;"></span></span>
+                        <span class="bar-value">{{ count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <span class="section-title">Last 7 Days</span>
+                <div class="bar-chart day-bars">
+                    <div class="day-bar-row">
+                        {% for date, count in data.by_day %}
+                        <div class="day-bar-col">
+                            <span class="day-bar-fill" style="height: {{ (count / day_max * 100) | round }}%;"></span>
+                            <span class="day-bar-value">{{ count }}</span>
+                            <span class="day-bar-label">{{ date[5:] }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-note">
+            <span class="section-title">About this prototype</span>
+            <p>These charts draw from live appointment records when the database is available, and from
+            representative demo data otherwise. A production build would add printable PDF export and
+            date-range filters.</p>
+        </div>
+    </div>
+
+</body>
+</html>
