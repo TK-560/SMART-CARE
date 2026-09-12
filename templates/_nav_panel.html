@@ -1,0 +1,53 @@
+<header class="header">
+    <div class="brand">SMARTCARE</div>
+    <div class="header-actions">
+        <button class="btn-menu" id="menuToggle" type="button" aria-label="Toggle menu">
+            <span class="menu-icon">&#9776;</span>
+        </button>
+    </div>
+</header>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<aside class="side-panel" id="sidePanel">
+    <div class="panel-user">{{ session.get('user') or 'Guest' }}</div>
+    <nav class="panel-nav">
+        <a class="panel-link" href="/dashboard">Dashboard</a>
+        <a class="panel-link" href="/register">Register Patient</a>
+        <a class="panel-link" href="/doctors">Manage Doctors</a>
+        <a class="panel-link" href="/book_appointment">Book Appointment</a>
+        <a class="panel-link" href="/appointments">All Appointments</a>
+        <span class="panel-section">Prototype Features</span>
+        <a class="panel-link" href="/patient_portal">Patient Portal</a>
+        <a class="panel-link" href="/calendar">Appointment Calendar</a>
+        <a class="panel-link" href="/sms_reminders">SMS Reminders</a>
+        <a class="panel-link" href="/reports">Reports &amp; Analytics</a>
+        <a class="panel-link" href="/qr_checkin">QR Check-in</a>
+        <a class="panel-link" href="/assistant">AI Assistant</a>
+        <a class="panel-link" href="/innovations">Innovations Hub</a>
+    </nav>
+    <div class="panel-footer">
+        <a class="btn btn-logout panel-logout" href="/logout">Logout</a>
+    </div>
+</aside>
+
+<script>
+    var menuToggle = document.getElementById("menuToggle");
+    var sidePanel = document.getElementById("sidePanel");
+    var navOverlay = document.getElementById("navOverlay");
+
+    function openPanel() {
+        sidePanel.classList.add("open");
+        navOverlay.classList.add("show");
+    }
+
+    function closePanel() {
+        sidePanel.classList.remove("open");
+        navOverlay.classList.remove("show");
+    }
+
+    menuToggle.addEventListener("click", openPanel);
+    navOverlay.addEventListener("click", closePanel);
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closePanel();
+    });
+</script>

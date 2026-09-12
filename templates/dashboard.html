@@ -7,13 +7,7 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <header class="header">
-        <a class="brand" href="/" style="text-decoration: none; color: var(--text-main);">SMARTCARE</a>
-        <div class="header-actions">
-            <span class="user-badge">Signed in as {{ session.get('user') }}</span>
-            <a href="/logout" class="btn btn-logout">Logout</a>
-        </div>
-    </header>
+    {% include '_nav_panel.html' %}
 
     <div class="main-container" style="max-width: 1150px;">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -145,14 +139,5 @@
             </aside>
         </div>
     </div>
-
-    <nav class="bottom-nav">
-        <a href="/register" class="nav-item">Registration</a>
-        <a href="/book_appointment" class="nav-item">Appointment</a>
-        <a href="/patient_portal" class="nav-item">Patient Portal</a>
-        <a href="/calendar" class="nav-item">Calendar</a>
-        <a href="/dashboard" class="nav-item active">Dashboard</a>
-        <a href="/innovations" class="nav-item">Innovations</a>
-    </nav>
 </body>
 </html>

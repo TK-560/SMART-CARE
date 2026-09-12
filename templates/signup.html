@@ -22,6 +22,11 @@
             </div>
 
             <div class="split-right">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1rem;">{{ message }}</div>
+                    {% endfor %}
+                {% endwith %}
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Fill in the details below to create your account.</p>
                 <form action="/signup" method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;" onsubmit="return validateSignup()">
                     <div class="form-group">

@@ -7,13 +7,7 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <header class="header">
-        <a class="brand" href="/" style="text-decoration: none; color: var(--text-main);">SMARTCARE</a>
-        <div class="header-actions">
-            <span class="user-badge">{{ 'Signed in as ' ~ session.get('user') if session.get('user') else 'System Access' }}</span>
-            <a href="/dashboard" class="btn btn-logout">Dashboard</a>
-        </div>
-    </header>
+    {% include '_nav_panel.html' %}
 
     <div class="main-container" style="max-width: 1080px;">
         <div class="step-header">
@@ -102,11 +96,5 @@
         </div>
     </div>
 
-    <nav class="bottom-nav">
-        <a href="/register" class="nav-item">Registration</a>
-        <a href="/book_appointment" class="nav-item">Appointment</a>
-        <a href="/innovations" class="nav-item active">Innovations</a>
-        <a href="/dashboard" class="nav-item">Dashboard</a>
-    </nav>
 </body>
 </html>
