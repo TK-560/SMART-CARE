@@ -1,146 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>SmartCare - Book Appointment</title>
-        <link rel="stylesheet" href="/static/style.css">
-    </head>
-    <body>
-        <header class="header">
-            <div class="brand">SMARTCARE</div>
-            <div class="header-actions">
-                <span class="user-badge">{{ session.get('user') }} ·
-                    Appointments</span>
-                <a href="/logout" class="btn btn-logout">Logout</a>
-            </div>
-        </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Book Appointment</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <a class="brand" href="/" style="text-decoration: none; color: var(--text-main);">SMARTCARE</a>
+        <div class="header-actions">
+            <span class="user-badge">{{ session.get('user') }} · Appointments</span>
+            <a href="/logout" class="btn btn-logout">Logout</a>
+        </div>
+    </header>
 
-        <div class="main-container">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% for category, message in messages %}
-            <div
-                class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}"
-                style="margin-bottom: 1rem;">{{ message }}</div>
-            {% endfor %}
-            {% endwith %}
-
-            <div class="step-header">
-                <span class="step-title">Scheduling / Step 1 of 1</span>
-                <span class="required-label">* Select required slot</span>
-            </div>
-
-            <h2>Book Appointment</h2>
-
-            <form action="/book_appointment" method="POST"
-                onsubmit="return validateAppointmentForm()">
-                <div class="form-section">
-                    <span class="section-title">Appointment Details</span>
-                    <div class="form-grid">
-<div class="form-group">
-                        <label for="patient_id">Select Patient </label>
-                        <input type="search" id="patient_search" placeholder="Search patient by number or name..." autocomplete="off">
-                        <select id="patient_id" name="patient_id" required>
-                            <option value="">Select Patient</option>
-                            {% for patient in patients %}
-                            <option value="{{ patient[0] }}">{{ patient[2] }}, {{ patient[1] }} (#{{ patient[0] }})</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                        <div class="form-group">
-                            <label for="doctor_id">Select Doctor </label>
-                            <select id="doctor_id" name="doctor_id" required>
-                                <option value>Select Doctor</option>
-                                {% for doctor in doctors %}
-                                <option value="{{ doctor[0] }}">{{ doctor[1] }}
-                                    ({{ doctor[2] }})</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="appointment_date">Date </label>
-                            <input type="date" id="appointment_date"
-                                name="appointment_date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="appointment_time">Time Slot </label>
-                            <input type="time" id="appointment_time"
-                                name="appointment_time" required>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="notes">Clinical Notes</label>
-                            <textarea id="notes" name="notes" rows="3"
-                                placeholder="Reason for visit or symptoms..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <a href="/dashboard" class="btn btn-secondary"
-                        style="width: auto;">Cancel</a>
-                    <button type="submit" class="btn btn-primary"
-                        style="width: auto;">Confirm Booking</button>
-                </div>
-            </form>
+    <div class="main-container" style="max-width: 1100px;">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">Book Appointment</span>
         </div>
 
-        <nav class="bottom-nav">
-            <a href="/register" class="nav-item">Registration</a>
-            <a href="/dashboard" class="nav-item">Dashboard</a>
-        </nav>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1rem;">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
 
-        <script>
+        <div class="step-header">
+            <span class="step-title">Scheduling</span>
+            <span class="required-label">* Select patient, doctor, date and time</span>
+        </div>
+
+        <h2>Book Appointment</h2>
+
+        <form action="/book_appointment" method="POST" id="bookingForm" onsubmit="return validateAppointmentForm()">
+            <div class="booking-layout">
+                <div class="booking-main">
+                    <div class="form-section">
+                        <span class="section-title">1 · Select Patient</span>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="patient_search">Search Patient</label>
+                                <input type="search" id="patient_search" placeholder="Search patient by number or name..." autocomplete="off">
+                                <select id="patient_id" name="patient_id" required>
+                                    <option value="">Select Patient</option>
+                                    {% for patient in patients %}
+                                    <option value="{{ patient[0] }}">{{ patient[2] }}, {{ patient[1] }} (#{{ patient[0] }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <span class="section-title">2 · Select Doctor</span>
+                        <div class="doctor-grid" id="doctorGrid">
+                            {% for doctor in doctors %}
+                            <label class="doctor-card">
+                                <input type="radio" name="doctor_id" value="{{ doctor[0] }}">
+                                <span class="doctor-name">{{ doctor[1] }}</span>
+                                <span class="doctor-spec">{{ doctor[2] }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                        <span class="field-hint" id="doctor_hint"></span>
+                    </div>
+
+                    <div class="form-section">
+                        <span class="section-title">3 · Choose Date &amp; Time</span>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="appointment_date">Selected Date</label>
+                                <input type="date" id="appointment_date" name="appointment_date" required>
+                                <span class="field-hint" id="date_hint"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointment_time">Time Slot</label>
+                                <input type="time" id="appointment_time" name="appointment_time" step="1800" required>
+                                <span class="field-hint" id="time_hint"></span>
+                            </div>
+                        </div>
+
+                        <div class="calendar-widget" data-month="0">
+                            <div class="calendar-head">
+                                <button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">‹</button>
+                                <span class="cal-title" id="calTitle">…</span>
+                                <button type="button" class="cal-nav" id="calNext" aria-label="Next month">›</button>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid"></div>
+                        </div>
+
+                        <div class="time-slots">
+                            <span class="time-slots-label">Quick select time</span>
+                            <div class="time-slot-row">
+                                {% for slot in ["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30"] %}
+                                <button type="button" class="time-slot" data-time="{{ slot }}">{{ slot }}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <span class="section-title">4 · Clinical Notes</span>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Reason for visit or symptoms..."></textarea>
+                    </div>
+                </div>
+
+                <aside class="booking-summary">
+                    <span class="section-title">Booking Summary</span>
+                    <div class="summary-row"><span>Patient</span><strong id="sumPatient">—</strong></div>
+                    <div class="summary-row"><span>Doctor</span><strong id="sumDoctor">—</strong></div>
+                    <div class="summary-row"><span>Date</span><strong id="sumDate">—</strong></div>
+                    <div class="summary-row"><span>Time</span><strong id="sumTime">—</strong></div>
+                    <div class="summary-row"><span>Status</span><span class="status-badge status-confirmed">Confirmed</span></div>
+                    <div class="summary-note">Appointments are booked with a <strong>Confirmed</strong> status and appear on the dashboard immediately.</div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Confirm Booking</button>
+                    <a href="/dashboard" class="btn btn-secondary" style="width: 100%;">Cancel</a>
+                </aside>
+            </div>
+        </form>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="/register" class="nav-item">Registration</a>
+        <a href="/book_appointment" class="nav-item active">Appointment</a>
+        <a href="/calendar" class="nav-item">Calendar</a>
+        <a href="/dashboard" class="nav-item">Dashboard</a>
+    </nav>
+
+    <script>
         document.getElementById("patient_search").addEventListener("input", function () {
             var query = this.value.toLowerCase();
             var select = document.getElementById("patient_id");
-            var option = select.querySelector('option:not([value=""])');
             var firstMatchValue = "";
             for (var i = 0; i < select.options.length; i++) {
                 var opt = select.options[i];
                 if (opt.value === "") continue;
                 var label = opt.text.toLowerCase();
                 opt.hidden = query && label.indexOf(query) === -1;
-                if (firstMatchValue === "" && !opt.hidden) {
-                    firstMatchValue = opt.value;
-                }
+                if (firstMatchValue === "" && !opt.hidden) firstMatchValue = opt.value;
             }
             select.selectedIndex = 0;
-            if (query && firstMatchValue !== "") {
-                select.value = firstMatchValue;
-            }
+            if (query && firstMatchValue !== "") select.value = firstMatchValue;
+            updateSummary();
         });
+
+        // ---- Doctor cards ----
+        document.querySelectorAll(".doctor-card input").forEach(function (radio) {
+            radio.addEventListener("change", function () {
+                document.getElementById("doctor_hint").textContent = "";
+                updateSummary();
+            });
+        });
+
+        // ---- Time slots ----
+        document.querySelectorAll(".time-slot").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                document.querySelectorAll(".time-slot").forEach(function (b) { b.classList.toggle("active", b === btn); });
+                document.getElementById("appointment_time").value = btn.dataset.time;
+                document.getElementById("time_hint").textContent = "";
+                updateSummary();
+            });
+        });
+
+        // ---- Calendar widget ----
+        var calendar = { year: new Date().getFullYear(), month: new Date().getMonth() };
+        var monthNames = ["January","February","March","April","May","June",
+                          "July","August","September","October","November","December"];
+        var dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+        function renderCalendar() {
+            var first = new Date(calendar.year, calendar.month, 1);
+            var daysInMonth = new Date(calendar.year, calendar.month + 1, 0).getDate();
+            var offset = first.getDay();
+            document.getElementById("calTitle").textContent =
+                monthNames[calendar.month] + " " + calendar.year;
+
+            var html = dayNames.map(function (d) { return '<span class="cal-day-head">' + d + '</span>'; }).join("");
+            for (var i = 0; i < offset; i++) html += '<span class="cal-day empty"></span>';
+
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            for (var day = 1; day <= daysInMonth; day++) {
+                var date = new Date(calendar.year, calendar.month, day);
+                date.setHours(0, 0, 0, 0);
+                var cls = "cal-day";
+                if (date.getTime() < today.getTime()) cls += " past";
+                if (calendar.year === today.getFullYear() && calendar.month === today.getMonth() && day === today.getDate()) cls += " today";
+                html += '<span class="' + cls + '" data-day="' +
+                    calendar.year + "-" + String(calendar.month + 1).padStart(2, "0") + "-" + String(day).padStart(2, "0") +
+                    '">' + day + '</span>';
+            }
+            document.getElementById("calendarGrid").innerHTML = html;
+        }
+
+        document.getElementById("calPrev").addEventListener("click", function () {
+            calendar.month--;
+            if (calendar.month < 0) { calendar.month = 11; calendar.year--; }
+            renderCalendar();
+        });
+        document.getElementById("calNext").addEventListener("click", function () {
+            calendar.month++;
+            if (calendar.month > 11) { calendar.month = 0; calendar.year++; }
+            renderCalendar();
+        });
+
+        document.getElementById("calendarGrid").addEventListener("click", function (e) {
+            var cell = e.target.closest(".cal-day");
+            if (!cell || cell.classList.contains("empty") || cell.classList.contains("past")) return;
+            document.getElementById("appointment_date").value = cell.dataset.day;
+            document.getElementById("date_hint").textContent = "";
+            document.querySelectorAll(".cal-day.today, .cal-day").forEach(function (c) {
+                if (c !== cell) c.classList.remove("selected");
+            });
+            cell.classList.add("selected");
+            updateSummary();
+        });
+
+        // ---- Summary ----
+        function updateSummary() {
+            var patient = document.getElementById("patient_id");
+            var doctor = document.querySelector('.doctor-card input:checked');
+            var dateEl = document.getElementById("appointment_date");
+            var timeEl = document.getElementById("appointment_time");
+
+            document.getElementById("sumPatient").textContent = patient && patient.selectedIndex > 0
+                ? patient.options[patient.selectedIndex].text : "—";
+            document.getElementById("sumDoctor").textContent = doctor
+                ? doctor.parentElement.querySelector(".doctor-name").textContent : "—";
+            document.getElementById("sumDate").textContent = dateEl.value || "—";
+            document.getElementById("sumTime").textContent = timeEl.value || "—";
+        }
+
+        document.getElementById("patient_id").addEventListener("change", updateSummary);
 
         function validateAppointmentForm() {
             var patientId = document.getElementById("patient_id").value;
-            var doctorId = document.getElementById("doctor_id").value;
+            var doctorId = document.querySelector('.doctor-card input:checked');
             var date = document.getElementById("appointment_date").value;
             var time = document.getElementById("appointment_time").value;
+            var ok = true;
 
             if (!patientId) {
-                alert("Please select a patient.");
+                document.getElementById("patient_search").focus();
                 return false;
             }
             if (!doctorId) {
-                alert("Please select a doctor.");
-                return false;
+                document.getElementById("doctor_hint").textContent = "Please select a doctor.";
+                ok = false;
             }
             if (!date) {
-                alert("Please select an appointment date.");
-                return false;
+                document.getElementById("date_hint").textContent = "Please choose a date from the calendar.";
+                ok = false;
             }
             if (!time) {
-                alert("Please select an appointment time.");
-                return false;
+                document.getElementById("time_hint").textContent = "Please pick a time slot.";
+                ok = false;
             }
+            if (!ok) return false;
 
             var today = new Date();
             today.setHours(0, 0, 0, 0);
             var selected = new Date(date);
             if (selected < today) {
-                alert("Appointment date cannot be in the past.");
+                document.getElementById("date_hint").textContent = "Appointment date cannot be in the past.";
                 return false;
             }
             return true;
         }
+
+        renderCalendar();
     </script>
-    </body>
+</body>
 </html>

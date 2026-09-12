@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartCare - Register Patient</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header class="header">
-        <div class="brand">SMARTCARE</div>
+        <a class="brand" href="/" style="text-decoration: none; color: var(--text-main);">SMARTCARE</a>
         <div class="header-actions">
             <span class="user-badge">{{ session.get('user') }} · Staff Workspace</span>
             <a href="/logout" class="btn btn-logout">Logout</a>
@@ -15,6 +16,12 @@
     </header>
 
     <div class="main-container">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">Register Patient</span>
+        </div>
+
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% for category, message in messages %}
                 <div class="flash {{ 'flash-ok' if category == 'success' else 'flash-err' }}" style="margin-bottom: 1rem;">{{ message }}</div>
@@ -22,67 +29,83 @@
         {% endwith %}
 
         <div class="step-header">
-            <span class="step-title">Patient Intake / Step 1 of 1</span>
+            <span class="step-title">Patient Intake</span>
             <span class="required-label">* Required fields</span>
         </div>
 
         <h2>Register New Patient</h2>
 
-        <form action="/register" method="POST" onsubmit="return validatePatientForm()">
+        <div class="stepper">
+            <div class="stepper-step active"><span class="step-num">1</span> Personal</div>
+            <div class="stepper-step active"><span class="step-num">2</span> Contact</div>
+            <div class="stepper-step"><span class="step-num">3</span> Review &amp; Save</div>
+        </div>
+
+        <form action="/register" method="POST" id="patientForm" novalidate onsubmit="return validatePatientForm()">
             <div class="form-section">
                 <span class="section-title">Personal Information</span>
+                <p class="section-hint">Primary identification and demographic details.</p>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="patient_number">Patient Number</label>
-                        <input type="text" id="patient_number" name="patient_number" placeholder="8-digit Number" maxlength="8" pattern="[0-9]{8}" required>
+                        <label for="patient_number">Patient Number <span class="req-star">*</span></label>
+                        <input type="text" id="patient_number" name="patient_number" placeholder="8-digit Number" maxlength="8" pattern="[0-9]{8}">
                         <span class="field-hint" id="ptn_hint"></span>
                     </div>
                     <div class="form-group">
-                        <label for="sa_id">SA ID / Passport Number</label>
-                        <input type="text" id="sa_id" name="sa_id" placeholder="13-digit SA ID" maxlength="13" pattern="[0-9]{13}" required>
+                        <label for="sa_id">SA ID / Passport Number <span class="req-star">*</span></label>
+                        <input type="text" id="sa_id" name="sa_id" placeholder="13-digit SA ID" maxlength="13" pattern="[0-9]{13}">
                         <span class="field-hint" id="id_hint"></span>
                     </div>
                     <div class="form-group">
-                        <label for="first_name">First Name</label>
-                        <input type="text" id="first_name" name="first_name" required>
+                        <label for="first_name">First Name <span class="req-star">*</span></label>
+                        <input type="text" id="first_name" name="first_name">
+                        <span class="field-hint" id="fn_hint"></span>
                     </div>
                     <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" id="last_name" name="last_name" required>
+                        <label for="last_name">Last Name <span class="req-star">*</span></label>
+                        <input type="text" id="last_name" name="last_name">
+                        <span class="field-hint" id="ln_hint"></span>
                     </div>
                     <div class="form-group">
-                        <label for="dob">Date of Birth </label>
-                        <input type="date" id="dob" name="dob" required>
+                        <label for="dob">Date of Birth <span class="req-star">*</span></label>
+                        <input type="date" id="dob" name="dob">
+                        <span class="field-hint" id="dob_hint"></span>
                     </div>
                     <div class="form-group">
-                        <label>Gender </label>
+                        <label>Gender <span class="req-star">*</span></label>
                         <div class="radio-group">
-                            <label class="radio-option"><input type="radio" name="gender" value="Male" required> Male</label>
+                            <label class="radio-option"><input type="radio" name="gender" value="Male"> Male</label>
                             <label class="radio-option"><input type="radio" name="gender" value="Female"> Female</label>
                             <label class="radio-option"><input type="radio" name="gender" value="Other"> Other</label>
                         </div>
+                        <span class="field-hint" id="gender_hint"></span>
                     </div>
                 </div>
             </div>
 
             <div class="form-section">
-                <span class="section-title">Contact & Residence</span>
+                <span class="section-title">Contact &amp; Residence</span>
+                <p class="section-hint">How the clinic can reach the patient and next of kin.</p>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="contact_number">Contact Number </label>
-                        <input type="tel" id="contact_number" name="contact_number" required>
+                        <label for="contact_number">Contact Number <span class="req-star">*</span></label>
+                        <input type="tel" id="contact_number" name="contact_number" placeholder="e.g. 082 555 0101">
+                        <span class="field-hint" id="contact_hint"></span>
                     </div>
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email">
+                        <input type="email" id="email" name="email" placeholder="patient@example.com">
+                        <span class="field-hint" id="email_hint"></span>
                     </div>
                     <div class="form-group full-width">
-                        <label for="residential_address">Residential Address </label>
-                        <input type="text" id="residential_address" name="residential_address" required>
+                        <label for="residential_address">Residential Address <span class="req-star">*</span></label>
+                        <input type="text" id="residential_address" name="residential_address" placeholder="Street, Suburb, City">
+                        <span class="field-hint" id="addr_hint"></span>
                     </div>
                     <div class="form-group full-width">
-                        <label for="emergency_contact">Emergency Contact Details </label>
-                        <input type="text" id="emergency_contact" name="emergency_contact" required>
+                        <label for="emergency_contact">Emergency Contact Details <span class="req-star">*</span></label>
+                        <input type="text" id="emergency_contact" name="emergency_contact" placeholder="Full name and phone number of next of kin">
+                        <span class="field-hint" id="emergency_hint"></span>
                     </div>
                 </div>
             </div>
@@ -95,53 +118,88 @@
     </div>
 
     <nav class="bottom-nav">
+        <a href="/register" class="nav-item active">Registration</a>
         <a href="/book_appointment" class="nav-item">Appointment</a>
+        <a href="/patient_portal" class="nav-item">Patient Portal</a>
+        <a href="/calendar" class="nav-item">Calendar</a>
         <a href="/dashboard" class="nav-item">Dashboard</a>
     </nav>
 
     <script>
-        function validatePatientForm() {
-            var patientNumber = document.getElementById("patient_number").value.trim();
-            var saId = document.getElementById("sa_id").value.trim();
-            var firstName = document.getElementById("first_name").value.trim();
-            var lastName = document.getElementById("last_name").value.trim();
-            var dob = document.getElementById("dob").value;
-            var contact = document.getElementById("contact_number").value.trim();
-            var address = document.getElementById("residential_address").value.trim();
-            var emergency = document.getElementById("emergency_contact").value.trim();
+        var fieldHints = {};
 
-            if (!/^\d{8}$/.test(patientNumber)) {
-                alert("Patient number must be exactly 8 digits.");
-                return false;
-            }
-            if (!/^\d{13}$/.test(saId)) {
-                alert("SA ID must be exactly 13 digits.");
-                return false;
-            }
-            if (!firstName || !lastName) {
-                alert("Please provide first and last name.");
-                return false;
-            }
-            if (!dob) {
-                alert("Please select a date of birth.");
-                return false;
-            }
-            if (!contact || !address || !emergency) {
-                alert("Please complete all contact and residence fields.");
-                return false;
-            }
-            return true;
+        function setHint(id, ok, text) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = text;
+            el.classList.toggle("hint-ok", ok);
+        }
+
+        function validateField(id, hintId, condition, message) {
+            var value = document.getElementById(id).value.trim();
+            var ok = condition(value);
+            setHint(hintId, ok, ok ? "" : message);
+            return ok;
         }
 
         document.getElementById("patient_number").addEventListener("input", function () {
-            var hint = document.getElementById("ptn_hint");
-            hint.textContent = /^\d{8}$/.test(this.value) ? "" : "8 digits required";
+            setHint("ptn_hint", /^\d{8}$/.test(this.value), this.value && !/^\d{8}$/.test(this.value) ? "Patient number must be exactly 8 digits." : "");
+        });
+        document.getElementById("sa_id").addEventListener("input", function () {
+            setHint("id_hint", /^\d{13}$/.test(this.value), this.value && !/^\d{13}$/.test(this.value) ? "SA ID must be exactly 13 digits." : "");
+        });
+        document.getElementById("email").addEventListener("input", function () {
+            setHint("email_hint", !this.value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value),
+                this.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value) ? "Enter a valid email address." : "");
         });
 
-        document.getElementById("sa_id").addEventListener("input", function () {
-            var hint = document.getElementById("id_hint");
-            hint.textContent = /^\d{13}$/.test(this.value) ? "" : "13 digits required";
-        });
+        function validatePatientForm() {
+            var ok = true;
+
+            ok = validateField("patient_number", "ptn_hint",
+                function (v) { return /^\d{8}$/.test(v); },
+                "Patient number must be exactly 8 digits.") && ok;
+
+            ok = validateField("sa_id", "id_hint",
+                function (v) { return /^\d{13}$/.test(v); },
+                "SA ID must be exactly 13 digits.") && ok;
+
+            ok = validateField("first_name", "fn_hint",
+                function (v) { return v.length > 0; },
+                "First name is required.") && ok;
+
+            ok = validateField("last_name", "ln_hint",
+                function (v) { return v.length > 0; },
+                "Last name is required.") && ok;
+
+            ok = validateField("dob", "dob_hint",
+                function (v) { return v.length > 0; },
+                "Please select a date of birth.") && ok;
+
+            ok = validateField("contact_number", "contact_hint",
+                function (v) { return v.length > 0; },
+                "A contact number is required.") && ok;
+
+            ok = validateField("residential_address", "addr_hint",
+                function (v) { return v.length > 0; },
+                "Residential address is required.") && ok;
+
+            ok = validateField("emergency_contact", "emergency_hint",
+                function (v) { return v.length > 0; },
+                "Emergency contact details are required.") && ok;
+
+            var gender = document.querySelector('input[name="gender"]:checked');
+            setHint("gender_hint", !!gender, gender ? "" : "Please select a gender.");
+            ok = ok && !!gender;
+
+            if (!ok) {
+                var firstError = document.querySelector(".field-hint:not(.hint-ok)");
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }
+            return ok;
+        }
     </script>
 </body>
 </html>

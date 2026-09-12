@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Patient Portal</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <a class="brand" href="/" style="text-decoration: none; color: var(--text-main);">SMARTCARE</a>
+        <div class="header-actions">
+            <span class="user-badge">Signed in as {{ session.get('user') }}</span>
+            <a href="/logout" class="btn btn-logout">Logout</a>
+        </div>
+    </header>
+
+    <div class="main-container" style="max-width: 1100px;">
+        <div class="crumb-nav">
+            <a href="/dashboard" class="crumb">Dashboard</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb active">Patient Portal</span>
+        </div>
+
+        <div class="step-header">
+            <h2>Patient Portal</h2>
+            <a href="/register" class="btn btn-primary" style="width: auto;">+ New Patient</a>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;" class="section-lead">
+            A single place to look up a patient, view their medical history, check in, or book a
+            follow-up visit.
+        </p>
+
+        <div class="feature-grid portal-features">
+            <div class="feature-card" style="cursor: default;">
+                <span class="feature-title">One-click lookup</span>
+                <p>Search instantly by patient number or name — no more hunting through paper files.</p>
+            </div>
+            <div class="feature-card" style="cursor: default;">
+                <span class="feature-title">Full history view</span>
+                <p>Every patient opens into a timeline of past visits, notes, and results.</p>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+            <input type="search" id="portal_search" placeholder="Search patient by number, name, or phone..." autocomplete="off">
+        </div>
+
+        {% if patients %}
+        <div class="table-section">
+            <table class="data-table" id="portal_table">
+                <thead>
+                    <tr>
+                        <th>Patient #</th>
+                        <th>Name</th>
+                        <th>DOB</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in patients %}
+                    <tr>
+                        <td>{{ p[0] }}</td>
+                        <td>{{ p[2] }}, {{ p[1] }}</td>
+                        <td>{{ p[3] }}</td>
+                        <td>{{ p[5] }}</td>
+                        <td>
+                            <a href="/history/{{ p[0] }}" class="btn btn-secondary" style="width: auto; padding: 0.35rem 0.9rem; font-size: 0.7rem;">History</a>
+                            <a href="/book_appointment" class="btn btn-primary" style="width: auto; padding: 0.35rem 0.9rem; font-size: 0.7rem;">Book</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p style="color: var(--text-muted); font-size: 0.9rem;">No patients registered yet. Register a patient to see them here.</p>
+        {% endif %}
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="/register" class="nav-item">Registration</a>
+        <a href="/book_appointment" class="nav-item">Appointment</a>
+        <a href="/patient_portal" class="nav-item active">Patient Portal</a>
+        <a href="/calendar" class="nav-item">Calendar</a>
+        <a href="/dashboard" class="nav-item">Dashboard</a>
+    </nav>
+
+    <script>
+        document.getElementById("portal_search").addEventListener("input", function () {
+            var query = this.value.toLowerCase();
+            var rows = document.querySelectorAll("#portal_table tbody tr");
+            rows.forEach(function (row) {
+                row.hidden = row.textContent.toLowerCase().indexOf(query) === -1;
+            });
+        });
+    </script>
+</body>
+</html>
