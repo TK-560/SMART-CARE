@@ -72,7 +72,8 @@ DOCTOR_SPEC = {d[1]: d[2] for d in DEMO_DOCTORS}
 def demo_appointments():
     """Deterministic-but-live demo schedule around today's date."""
     today = datetime.date.today()
-    d = lambda offset: (today + datetime.timedelta(days=offset)).strftime("%Y-%m-%d")
+    def d(offset): return (
+        today + datetime.timedelta(days=offset)).strftime("%Y-%m-%d")
     return [
         (101, d(0), "09:30", "90000125", "Lerato Mokoena",
          "Dr. Sarah Naidoo", "Confirmed", "Follow-up on blood pressure"),
@@ -98,7 +99,8 @@ def demo_history(patient_number):
                                                   "1985-04-12", "Female", "082 555 0101",
                                                   "lerato.m@gmail.com", "12 Main Road, Durban"))
     today = datetime.date.today()
-    d = lambda offset: (today + datetime.timedelta(days=offset)).strftime("%Y-%m-%d")
+    def d(offset): return (
+        today + datetime.timedelta(days=offset)).strftime("%Y-%m-%d")
     return [
         (d(-1), "10:00", "Dr. Sarah Naidoo", "Completed",
          "Blood pressure elevated; prescribed moderate exercise."),
@@ -329,7 +331,8 @@ def book_appointment():
                 success = True
             except Exception as e:
                 print("Error booking appointment:", e)
-                flash("Could not book appointment. Check the patient number and doctor selection.", "error")
+                flash(
+                    "Could not book appointment. Check the patient number and doctor selection.", "error")
             finally:
                 try:
                     conn.close()
@@ -481,14 +484,16 @@ def delete_doctor(doctor_id):
     if conn:
         cursor = conn.cursor()
         try:
-            cursor.execute("DELETE FROM Doctors WHERE DoctorID = ?", (doctor_id,))
+            cursor.execute(
+                "DELETE FROM Doctors WHERE DoctorID = ?", (doctor_id,))
             conn.commit()
             conn.close()
             flash("Doctor deleted successfully.", "success")
         except Exception as e:
             print("Error deleting doctor:", e)
             conn.close()
-            flash("Could not delete doctor. They may have existing appointments.", "error")
+            flash(
+                "Could not delete doctor. They may have existing appointments.", "error")
 
     return redirect(url_for("doctors"))
 
@@ -568,7 +573,8 @@ def dashboard():
         notifications.append(("appointment",
                               "%d appointment(s) scheduled for today." % today_count))
     if not upcoming_appointments:
-        notifications.append(("alert", "No upcoming appointments in the schedule."))
+        notifications.append(
+            ("alert", "No upcoming appointments in the schedule."))
     else:
         nxt = upcoming_appointments[0]
         notifications.append((
@@ -699,7 +705,8 @@ def sms_reminders():
         """,
         params=(today.strftime("%Y-%m-%d"), week_later),
         demo=[(a[0], a[1], a[2], a[4],
-               PATIENT_LOOKUP.get(a[3], ("", "", "", "", "", "082 555 0101", "", ""))[5],
+               PATIENT_LOOKUP.get(
+                   a[3], ("", "", "", "", "", "082 555 0101", "", ""))[5],
                a[5], a[6])
               for a in demo_appointments() if a[1] >= today.strftime("%Y-%m-%d")],
     )
@@ -732,7 +739,8 @@ def calendar():
 
     today = datetime.date.today()
     first = today.replace(day=1)
-    last = (first + datetime.timedelta(days=32)).replace(day=1) - datetime.timedelta(days=1)
+    last = (first + datetime.timedelta(days=32)
+            ).replace(day=1) - datetime.timedelta(days=1)
 
     rows = fetch_rows(
         """
@@ -861,7 +869,8 @@ def qr_checkin():
         target = request.form.get("target")
         checked = set(session.get("checked_in", []))
         if target:
-            checked.add(target) if target not in checked else checked.discard(target)
+            checked.add(
+                target) if target not in checked else checked.discard(target)
         session["checked_in"] = list(checked)
 
     today = datetime.date.today().strftime("%Y-%m-%d")
@@ -878,7 +887,8 @@ def qr_checkin():
         """,
         params=(today,),
         demo=[(a[0], a[1], a[2], a[4],
-               PATIENT_LOOKUP.get(a[3], ("", "", "", "", "", "082 555 0101", "", ""))[5],
+               PATIENT_LOOKUP.get(
+                   a[3], ("", "", "", "", "", "082 555 0101", "", ""))[5],
                a[5], a[6])
               for a in demo_appointments()
               if a[1] >= today and a[6] != "Completed"],
