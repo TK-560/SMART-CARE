@@ -491,7 +491,8 @@ def test_delete_doctor_redirects_when_logged_out(client):
 
 
 def test_all_doctors_lists_records(client, monkeypatch):
-    row = (1, "Dr Sarah Smith", "Cardiology", "0820000000", "sarah@smartcare.com")
+    row = (1, "Dr Sarah Smith", "Cardiology",
+           "0820000000", "sarah@smartcare.com")
     cursor = FakeCursor(fetchall_result=[row])
     monkeypatch.setattr(app_module, "get_connection",
                         lambda: make_conn(cursor))
@@ -542,7 +543,8 @@ def test_add_doctor_missing_fields_shows_error(client, monkeypatch):
 
 
 def test_edit_doctor_update(client, monkeypatch):
-    doctor = (1, "Dr Old Name", "Cardiology", "0820000000", "old@smartcare.com")
+    doctor = (1, "Dr Old Name", "Cardiology",
+              "0820000000", "old@smartcare.com")
     cursor = FakeCursor(fetchone_result=doctor)
     monkeypatch.setattr(app_module, "get_connection",
                         lambda: make_conn(cursor))
